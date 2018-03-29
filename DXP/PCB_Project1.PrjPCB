@@ -116,6 +116,10 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
+[GeneratedDocument1]
+DocumentPath=PCB1.PcbDoc.htm
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
