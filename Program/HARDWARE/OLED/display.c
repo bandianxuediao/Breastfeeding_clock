@@ -641,7 +641,7 @@ void BackupCurrentDisplay(void)
 void ShowWelcome(void)
 {
 	clr_disp_mem();         //清除显存数据
-		oled_print(0, LINE1, "智能箱柜控制系统") ;  //字符输出函数
+		oled_print(0, LINE1, "智能闹钟测试系统") ;  //字符输出函数
 		oled_print(0, LINE2, "世界一流欢迎使用") ;  //字符输出函数	
 //		show_right_button("列表");//显示右功能
 //		show_left_button("查看"); //显示左功能

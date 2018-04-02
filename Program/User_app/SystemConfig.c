@@ -24,6 +24,7 @@ void SystemHWConfig(void)
 
 	//DeviceInit();
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);		//使用了spi3，禁用JATG，保留SWD功能
+
 		lcd12864_init();//12864初始化
 	
 	

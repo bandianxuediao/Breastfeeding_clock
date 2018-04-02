@@ -16,18 +16,18 @@
 //#define LCD_DATA_IN()  {GPIOD->CRH&=0X00000000;GPIOD->CRH|=0X44444444;}
 #define LCD_DATA_OUT() {GPIOA->CRL&=0X00000000;GPIOA->CRL|=0X77777777;}//PD8-15 推挽输出 
 //控制线***********************************************************
-#define LCD_RS_1    PGout(6)=1
-#define LCD_RS_0    PGout(6)=0
+#define LCD_RS_1    PBout(7)=1
+#define LCD_RS_0    PBout(7)=0
 //读写
-#define LCD_RW_1    PGout(4)=1
-#define LCD_RW_0    PGout(4)=0
+#define LCD_RW_1    PBout(4)=1
+#define LCD_RW_0    PBout(4)=0
 //使能
-#define LCD_EN_1    PGout(5)=1
-#define LCD_EN_0    PGout(5)=0
-#define  LCD_PSB_   PGout(2)
-#define  LCD_RST   PGout(7)
+#define LCD_EN_1    PBout(3)=1
+#define LCD_EN_0    PBout(3)=0
+#define  LCD_PSB_   PBout(1)
+#define  LCD_RST    PBout(0)
 
-
+//  0   1  10  11   0
 /*****************************************************************
          液晶模块指令集定义
 *****************************************************************
@@ -101,14 +101,15 @@ void clrgdram(void)
 
 void LCDIO_Init(void)
 {
+	//  0   1  10  11   0
     //Init_LCDIO();
-    RCC->APB2ENR |= 1 << 8; //使能PORTG时钟
+    RCC->APB2ENR |= 1 << 3; //使能PORTB时钟
 
-    GPIOG->CRL &= 0X000000FF;	//PG234567 推挽输出 	  RRD
-    GPIOG->CRL |= 0X33333300;
-
-    RCC->APB2ENR |= 1 << 2; //使能PORTD时钟
-    GPIOA->CRL &= 0X00000000;	//PD8-15 推挽输出 	WR
+    GPIOB->CRL &= 0X0FF00F00;	//PB12345 推挽输出 	  RRD
+    GPIOB->CRL |= 0X30033033;
+	
+    RCC->APB2ENR |= 1 << 2; //使能PORTA时钟
+    GPIOA->CRL &= 0X00000000;	//PA0-7 推挽输出 	WR
     GPIOA->CRL |= 0X33333333;
 
     LCD_PSB_S;
