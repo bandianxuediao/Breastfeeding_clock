@@ -80,12 +80,12 @@ u8 FindCard_FormIndex(void)
 {
 	u8 i;
 	u8 pBuffer[2];
-	for(i=0;i<200;i++)
-	{
-		AT24CXX_Read(i*10+101,pBuffer,2);
-		if((pBuffer[0] == RC531_sbuf[9])&&(pBuffer[1] == RC531_sbuf[12]))
-		{return AT24CXX_ReadOneByte(i*10+100);}	//找到相应的卡号，返回箱号
-	}
+//	for(i=0;i<200;i++)
+//	{
+//		AT24CXX_Read(i*10+101,pBuffer,2);
+//		if((pBuffer[0] == RC531_sbuf[9])&&(pBuffer[1] == RC531_sbuf[12]))
+//		{return AT24CXX_ReadOneByte(i*10+100);}	//找到相应的卡号，返回箱号
+//	}
 	return 0;  	//索引区已经读完，没找到卡号
 }
 //在数据索引区查找箱号
@@ -93,23 +93,23 @@ u8 FindCard_FormIndex(void)
 
 u8 FindBox_FromIndex(u8 temp)
 {
-	u8 pBuffer[5];	
-	AT24CXX_Read((temp-1)*10+100,pBuffer,5);
-	if((pBuffer[0] !=0)&(pBuffer[0] !=0xff))
-	{
-		if(pBuffer[0] == temp)//箱号相等
-		{
-			if((pBuffer[1] == 0)|(pBuffer[1] == 0xFF))//卡号部分为空,继续进行
-			{
-				Password[0] = pBuffer[3];
-				Password[1] = pBuffer[4];
-				return 2;//箱号相等，不存在卡号，返回密码
-			}
-			return 1;//存在卡号，是刷卡存包的
-		}
-		return 0;//箱号不相等
-	}
-	return 3;//此箱号为空
+//	u8 pBuffer[5];	
+//	AT24CXX_Read((temp-1)*10+100,pBuffer,5);
+//	if((pBuffer[0] !=0)&(pBuffer[0] !=0xff))
+//	{
+//		if(pBuffer[0] == temp)//箱号相等
+//		{
+//			if((pBuffer[1] == 0)|(pBuffer[1] == 0xFF))//卡号部分为空,继续进行
+//			{
+//				Password[0] = pBuffer[3];
+//				Password[1] = pBuffer[4];
+//				return 2;//箱号相等，不存在卡号，返回密码
+//			}
+//			return 1;//存在卡号，是刷卡存包的
+//		}
+//		return 0;//箱号不相等
+//	}
+//	return 3;//此箱号为空
 }
 
 
@@ -121,28 +121,28 @@ u8 FindBox_FromIndex(u8 temp)
 //箱号错误返回 4
 u8 Compare_Card(u8 box_num)
 {
-	u8 pBuffer[8];
-	AT24CXX_Read((box_num-1)*10+2500,pBuffer, 8);
-	if(pBuffer[0] == box_num)
-	{
-		if((pBuffer[1] == RC531_sbuf[9])&&(pBuffer[2] == RC531_sbuf[10])&&(pBuffer[3] == RC531_sbuf[11])&&(pBuffer[4] == RC531_sbuf[12]))
-		{
-			if(pBuffer[7] == 0x11) //有密码
-			{
-				Password[0] = pBuffer[5];
-				Password[1] = pBuffer[6];
-				return 0x01;
-			}
-			if(pBuffer[7] != 0x11) //没有密码
-			{
-				Password[0] = 0;
-				Password[1] = 0;
-				return 0x02;
-			}
-		}
-		return 3; // ID校验失败		
-	}
-	return 4; 	//箱号校验失败	
+//	u8 pBuffer[8];
+//	AT24CXX_Read((box_num-1)*10+2500,pBuffer, 8);
+//	if(pBuffer[0] == box_num)
+//	{
+//		if((pBuffer[1] == RC531_sbuf[9])&&(pBuffer[2] == RC531_sbuf[10])&&(pBuffer[3] == RC531_sbuf[11])&&(pBuffer[4] == RC531_sbuf[12]))
+//		{
+//			if(pBuffer[7] == 0x11) //有密码
+//			{
+//				Password[0] = pBuffer[5];
+//				Password[1] = pBuffer[6];
+//				return 0x01;
+//			}
+//			if(pBuffer[7] != 0x11) //没有密码
+//			{
+//				Password[0] = 0;
+//				Password[1] = 0;
+//				return 0x02;
+//			}
+//		}
+//		return 3; // ID校验失败		
+//	}
+//	return 4; 	//箱号校验失败	
 }
 
 //刷卡操作
@@ -152,32 +152,32 @@ u8 Compare_Card(u8 box_num)
 //数据存储完毕将 CARD_ID , USER_BOX_NUM , IF_PASSWORD , PASSWORD 清零
 void SAVE_INFORMATION_CARD(void)
 {
-	if(INPUT_PASS_STATE == 2)
-	{
-		AT24CXX_Write(((USER_BOX_NUM-1)*10+100),CARD_ID_INF,5);//在索引区写入箱号和CARD_ID
-		AT24CXX_Write(((USER_BOX_NUM-1)*10+2500),USER_CARD_ID,8);//在数据区写入箱号和CARD_ID，密码
-	}
-	if(INPUT_PASS_STATE == 5)
-	{
-		AT24CXX_Write(((USER_BOX_NUM-1)*10+100),CARD_ID_INF,5);//在索引区写入箱号和CARD_ID
+//	if(INPUT_PASS_STATE == 2)
+//	{
+//		AT24CXX_Write(((USER_BOX_NUM-1)*10+100),CARD_ID_INF,5);//在索引区写入箱号和CARD_ID
 //		AT24CXX_Write(((USER_BOX_NUM-1)*10+2500),USER_CARD_ID,8);//在数据区写入箱号和CARD_ID，密码
-	}
+//	}
+//	if(INPUT_PASS_STATE == 5)
+//	{
+//		AT24CXX_Write(((USER_BOX_NUM-1)*10+100),CARD_ID_INF,5);//在索引区写入箱号和CARD_ID
+////		AT24CXX_Write(((USER_BOX_NUM-1)*10+2500),USER_CARD_ID,8);//在数据区写入箱号和CARD_ID，密码
+//	}
 }
 
 //已经取包，将数据区清除，写入0xFF
 void CLEAR_BOX(void)
 {
-	if(INPUT_PASS_STATE == 2)
-	{
-		AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+100),0xFF,10);
-		AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+2500),0xFF,10);
-		USER_BOX_NUM = 0;
-	}
-	if(INPUT_PASS_STATE == 5)
-	{
-		AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+100),0xFF,10);
-		USER_BOX_NUM = 0;		
-	}		
+//	if(INPUT_PASS_STATE == 2)
+//	{
+//		AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+100),0xFF,10);
+//		AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+2500),0xFF,10);
+//		USER_BOX_NUM = 0;
+//	}
+//	if(INPUT_PASS_STATE == 5)
+//	{
+//		AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+100),0xFF,10);
+//		USER_BOX_NUM = 0;		
+//	}		
 }
 
 //根据产生的随机数（BOX_NUM）来判断相应的索引区以及数据区是否有数据

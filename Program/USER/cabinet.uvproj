@@ -438,26 +438,6 @@
               <FilePath>..\Msg_Process\Key5Process.c</FilePath>
             </File>
             <File>
-              <FileName>Key6Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key6Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key7Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key7Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key8Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key8Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key9Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key9Process.c</FilePath>
-            </File>
-            <File>
               <FileName>ConnectProcess.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Msg_Process\ConnectProcess.c</FilePath>
@@ -481,16 +461,6 @@
               <FileName>KeyOutProcess.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Msg_Process\KeyOutProcess.c</FilePath>
-            </File>
-            <File>
-              <FileName>KeySureProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\KeySureProcess.c</FilePath>
-            </File>
-            <File>
-              <FileName>KeySysProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\KeySysProcess.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -566,76 +536,6 @@
               <FileName>EE_24C128.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\EEPROM\EE_24C128.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Irmp</GroupName>
-          <Files>
-            <File>
-              <FileName>irmp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Irmp\irmp.c</FilePath>
-            </File>
-            <File>
-              <FileName>irmpextlog.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Irmp\irmpextlog.c</FilePath>
-            </File>
-            <File>
-              <FileName>Red.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Irmp\Red.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>RC531</GroupName>
-          <Files>
-            <File>
-              <FileName>iso14443a.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\RC531\iso14443a.c</FilePath>
-            </File>
-            <File>
-              <FileName>rc632.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\RC531\rc632.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi_rc632.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\RC531\spi_rc632.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>w25qxx</GroupName>
-          <Files>
-            <File>
-              <FileName>w25qxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\w25qxx\w25qxx.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\w25qxx\spi2.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>TouchPad</GroupName>
-          <Files>
-            <File>
-              <FileName>pad.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\TouchPad\pad.c</FilePath>
-            </File>
-            <File>
-              <FileName>PAD_IIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\TouchPad\PAD_IIC.c</FilePath>
             </File>
           </Files>
         </Group>

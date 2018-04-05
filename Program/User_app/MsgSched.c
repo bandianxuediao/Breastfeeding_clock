@@ -133,7 +133,6 @@ void MsgSched(MSG msg)
 {
 	u8 i;
 	const struct SCHED_CODE SchedMsg[] = {   //创建一个const的SCHED_CODE类型的数组，将待处理消息和相关函数对应起来
-		CONNECT,  ConnectPro,
 		NULL_CODE, NullPro,
 		KEY_0, Key0Pro,
 		KEY_1, Key1Pro,
@@ -141,16 +140,7 @@ void MsgSched(MSG msg)
 		KEY_3, Key3Pro,
 		KEY_4, Key4Pro,
 		KEY_5, Key5Pro,
-		KEY_6, Key6Pro,
-		KEY_7, Key7Pro,
-		KEY_8, Key8Pro,
-		KEY_9, Key9Pro,
-		KEY_IN, KeyInPro,
-		KEY_OUT, KeyOutPro,
-		KEY_SURE, KeySurePro,	
-		KEY_SYS, KeySysPro,
-		KEY_KEY, KeyKeyPro,		
-		KEY_BACK, KeyBackPro		
+		
 
 	};
 

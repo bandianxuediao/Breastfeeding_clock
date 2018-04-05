@@ -40,3 +40,7 @@
 [2018-03-29 21:58:Program Success:32FFD5054B4D343420651351 D:\射频柜\Program\st7920显示系统（V1.0-20160616）\Project\OUTPUT\TimeTest.hex
 [2018-03-29 21:59:Program Success:32FFD5054B4D343420651351 D:\GitHub\Breastfeeding_clock\Program\Project\STM32F10x_StdPeriph_Template\RVMDK\Obj\demo.hex
 [2018-03-29 22:03:Program Success:32FFD5054B4D343420651351 D:\射频柜\Program\主程序\Cabinet（161210）\USER\obj\cabinet.hex
+[2018-04-05 19:16:Program Success:32FFD5054B4D343420651351 D:\GitRepositories\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-05 19:37:Program Success:32FFD5054B4D343420651351 D:\GitRepositories\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-05 19:39:Program Success:32FFD5054B4D343420651351 D:\GitRepositories\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-05 21:46:Program Success:32FFD5054B4D343420651351 D:\GitRepositories\Breastfeeding_clock\Program\USER\obj\cabinet.hex

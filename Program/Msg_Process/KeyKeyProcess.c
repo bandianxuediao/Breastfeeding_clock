@@ -26,12 +26,12 @@ void KeyKeyPro(MSG msg)
 	}
 	switch((SYS_STATE)msg.param1)
 	{
-		case WAIT_CARD://在主菜单下按‘1’键，进入注册流程
-			ShowInput(4);
-			RC531_SWITCH = 0;
-//			SetCurrentState(SET_KEY_BOXNUM);//系统上电，检测充电状态
-			break;
-		
+//		case WAIT_CARD://在主菜单下按‘1’键，进入注册流程
+//			ShowInput(4);
+//			RC531_SWITCH = 0;
+////			SetCurrentState(SET_KEY_BOXNUM);//系统上电，检测充电状态
+//			break;
+//		
 		default:
 			break;
 	}	

@@ -27,12 +27,12 @@ void KeyOutPro(MSG msg)
 	}
 	switch((SYS_STATE)msg.param1)
 	{
-		case WAIT_CARD_KEY://在主菜单下按‘取’键
-			ShowSys_Message(8);
-			INPUT_DATA_AMOUNT = 0;	//已经输入的字符数置零				
-			memset( INPUT_DATA_NUM, '\0', sizeof(INPUT_DATA_NUM) );
-			SetCurrentState(OUT_INPUT_BOXNUM);//设置为"取"输入箱号状态
-			break;
+//		case WAIT_CARD_KEY://在主菜单下按‘取’键
+//			ShowSys_Message(8);
+//			INPUT_DATA_AMOUNT = 0;	//已经输入的字符数置零				
+//			memset( INPUT_DATA_NUM, '\0', sizeof(INPUT_DATA_NUM) );
+//			SetCurrentState(OUT_INPUT_BOXNUM);//设置为"取"输入箱号状态
+//			break;
 		default:
 			break;
 	}	

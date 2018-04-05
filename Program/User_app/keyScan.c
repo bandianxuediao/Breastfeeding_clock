@@ -17,17 +17,17 @@
 //==================================================================================================
 static u16 MatrixKeyScan(void)
 {
-	int temp;
-	
-		if(!PAD_INT1)
-		{
-			temp = scan_key(KEY_AREA1);	//É¨Ãè°´¼ü		
-		}
-		if(!PAD_INT2)
-		{
-			temp = scan_key(KEY_AREA2);	//É¨Ãè°´¼ü		
-		}
-		return temp;
+//	int temp;
+//	
+//		if(!PAD_INT1)
+//		{
+//			temp = scan_key(KEY_AREA1);	//É¨Ãè°´¼ü		
+//		}
+//		if(!PAD_INT2)
+//		{
+//			temp = scan_key(KEY_AREA2);	//É¨Ãè°´¼ü		
+//		}
+//		return temp;
 }
 
 

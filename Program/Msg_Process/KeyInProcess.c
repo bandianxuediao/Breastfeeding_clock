@@ -27,24 +27,24 @@ void KeyInPro(MSG msg)
 	}
 	switch((SYS_STATE)msg.param1)
 	{
-		case WAIT_CARD_KEY://在主菜单下按‘存’键
-			ShowSys_Message(0);
-			while(HAVE_BOX)
-			{
-				random = GET_Random(); //刷卡后立即产生一个随机数
-				HAVE_BOX = BOX_EMPTY(random);//等于0 的时候退出循环
-				if(HAVE_BOX == 0)
-				{
-					USER_BOX_NUM = random;//随机数赋值给箱号
-				}
-			}
-			ShowSys_Message(7);
-			INPUT_PASS_STATE = 4;//密码存包第一次输入密码  4
-			CARD_ID_INF[0] = random;  //密码存包的数据保存在索引区
-			INPUT_DATA_AMOUNT = 0;	//已经输入的字符数置零				
-			memset( INPUT_DATA_NUM, '\0', sizeof(INPUT_DATA_NUM) );
-			SetCurrentState(PASSW_INPUT_KEY);//密码存包第一次输入密码
-			break;
+//		case WAIT_CARD_KEY://在主菜单下按‘存’键
+//			ShowSys_Message(0);
+//			while(HAVE_BOX)
+//			{
+//				random = GET_Random(); //刷卡后立即产生一个随机数
+//				HAVE_BOX = BOX_EMPTY(random);//等于0 的时候退出循环
+//				if(HAVE_BOX == 0)
+//				{
+//					USER_BOX_NUM = random;//随机数赋值给箱号
+//				}
+//			}
+//			ShowSys_Message(7);
+//			INPUT_PASS_STATE = 4;//密码存包第一次输入密码  4
+//			CARD_ID_INF[0] = random;  //密码存包的数据保存在索引区
+//			INPUT_DATA_AMOUNT = 0;	//已经输入的字符数置零				
+//			memset( INPUT_DATA_NUM, '\0', sizeof(INPUT_DATA_NUM) );
+//			SetCurrentState(PASSW_INPUT_KEY);//密码存包第一次输入密码
+//			break;
 		default:
 			break;
 	}
