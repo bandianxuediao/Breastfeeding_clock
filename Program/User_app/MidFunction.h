@@ -10,8 +10,8 @@
 
 #define Back_Light(x) x?(GPIO_SetBits(GPIOA, GPIO_Pin_15)):(GPIO_ResetBits(GPIOA, GPIO_Pin_15));
 
-//#define Back_Light_1	GPIO_SetBits(GPIOA, GPIO_Pin_15)
-//#define	Back_Light_0	GPIO_ResetBits(GPIOA, GPIO_Pin_15)
+//#define Back_Light_1  GPIO_SetBits(GPIOA, GPIO_Pin_15)
+//#define   Back_Light_0    GPIO_ResetBits(GPIOA, GPIO_Pin_15)
 
 //#define Back_Light(x) x?Back_Light_1:Back_Light_0
 
