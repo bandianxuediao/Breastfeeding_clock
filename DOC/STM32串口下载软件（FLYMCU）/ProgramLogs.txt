@@ -52,3 +52,5 @@
 [2018-04-11 13:20:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
 [2018-04-11 13:25:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
 [2018-04-11 13:26:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 14:04:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 14:08:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex

@@ -400,83 +400,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Msg_Pro</GroupName>
-          <Files>
-            <File>
-              <FileName>NullProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\NullProcess.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key0Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key0Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key1Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key1Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key2Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key2Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key3Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key3Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key4Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key4Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>Key5Process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\Key5Process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ConnectProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\ConnectProcess.c</FilePath>
-            </File>
-            <File>
-              <FileName>KeyBackProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\KeyBackProcess.c</FilePath>
-            </File>
-            <File>
-              <FileName>KeyInProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\KeyInProcess.c</FilePath>
-            </File>
-            <File>
-              <FileName>KeyKeyProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\KeyKeyProcess.c</FilePath>
-            </File>
-            <File>
-              <FileName>KeyOutProcess.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Msg_Process\KeyOutProcess.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>user_app</GroupName>
           <Files>
-            <File>
-              <FileName>Message.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User_app\Message.c</FilePath>
-            </File>
-            <File>
-              <FileName>MsgSched.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User_app\MsgSched.c</FilePath>
-            </File>
             <File>
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
@@ -506,11 +431,6 @@
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\LED\led.c</FilePath>
-            </File>
-            <File>
-              <FileName>SystemConfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User_app\SystemConfig.c</FilePath>
             </File>
             <File>
               <FileName>oled.c</FileName>

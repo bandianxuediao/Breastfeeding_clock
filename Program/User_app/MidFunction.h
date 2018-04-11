@@ -5,7 +5,7 @@ extern u8 INPUT_PASS_STATE ; //用于表示处在哪个密码输入状态
 
 
 
-
+extern void PIN_Init(void);
 extern void pad_scan(void);
 extern void find_card(void);
 extern u8 compare_array(u8* array1 , u8* array2);
