@@ -8,6 +8,20 @@
 u8 INPUT_PASS_STATE ; //用于表示处在哪个密码输入状态
 
 
+void PIN_Init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOB, ENABLE );	//使能GPIOB时钟	   
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   //推挽输出
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_SetBits(GPIOB,GPIO_Pin_9); 	//PB9 输出高电平,控制12864的背光，使单片机的引脚电压控制,降低功耗	
+
+
+
+}
+
 u8 compare_array(u8* array1 , u8* array2)
 {
 	int i;

@@ -77,13 +77,7 @@ void PendSV_Handler(void)
  
 void SysTick_Handler(void)
 {
-	static MSG msg;	
 	TimingDelayDecrement();   //自定义定时器
-//	RS485DirCountDecrement(); //RS485无极性判断
-	
-//	irmp_get_key();	
-
-	
 }
 
 /******************************************************************************/
