@@ -9,17 +9,21 @@ int main(void)
 	NVIC_Configuration();  //设置NVIC中断分组2:2位抢占优先级，2位响应优先级 
 	//EE_IIC_Init();			 //EEPROM的IIC初始化
 	PIN_Init();
-
+EXTIX_Init();
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);		//使用了spi3，禁用JATG，保留SWD功能
 		lcd12864_init();//12864初始化
 
 			ShowWelcome();
 			delay_ms(200);
-SetSysTickTimer1(6000);	
+	
 	while(1)
 	{		
 	oled_updatescr(0, 64);	   //屏幕刷新	
-
+	if(KEY1==0)	 //按键KEY1
+	{				 
+PBout(9)=1;
+		SetSysTickTimer1(6000);
+	}
 
 if(GetSysTickTimer1State()==TIME_OUT)
 PBout(9)=0;

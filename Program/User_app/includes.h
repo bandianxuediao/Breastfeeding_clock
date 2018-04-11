@@ -6,10 +6,10 @@
 //#include "core_cm3.h"
 #include "stm32f10x.h"
 #include "stm32f10x_tim.h"
-
+#include "stm32f10x_exti.h"
 #include "system.h"
 
-
+#include "exti.h"
 #include "led.h"
 #include "delay.h"
 #include "sys.h"
