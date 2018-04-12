@@ -4,6 +4,8 @@
 int main(void)
 {
 //	NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x20000); //与配置文件相对应  配置程序的起始地址，前面一部分留给了bootload
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+
 	SysTickInit();         //设置滴答定时器中断时间为1ms
 //	delay_init();	    	 //延时函数初始化	  
 	NVIC_Configuration();  //设置NVIC中断分组2:2位抢占优先级，2位响应优先级 
@@ -22,11 +24,12 @@ EXTIX_Init();
 	if(KEY1==0)	 //按键KEY1
 	{				 
 PBout(9)=1;
-		SetSysTickTimer1(6000);
+	}
+	if(KEY1==1)	 //按键KEY1
+	{				 
+PBout(9)=0;
 	}
 
-if(GetSysTickTimer1State()==TIME_OUT)
-PBout(9)=0;
 //		if(max_waite==10000)
 //		{   lcdreset();                    //初始化LCD屏
 //				clrgdram();

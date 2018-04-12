@@ -70,3 +70,14 @@
 [2018-04-11 23:16:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
 [2018-04-11 23:17:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
 [2018-04-11 23:21:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 23:30:Program Success:32FFD5054B4D343420651351 C:\Users\liyage\Desktop\实验5 外部中断实验\OBJ\EXIT.hex
+[2018-04-11 23:33:Program Success:32FFD5054B4D343420651351 C:\Users\liyage\Desktop\实验5 外部中断实验\OBJ\EXIT.hex
+[2018-04-11 23:34:Program Success:32FFD5054B4D343420651351 C:\Users\liyage\Desktop\实验5 外部中断实验\OBJ\EXIT.hex
+[2018-04-11 23:35:Program Success:32FFD5054B4D343420651351 C:\Users\liyage\Desktop\实验5 外部中断实验\OBJ\EXIT.hex
+[2018-04-11 23:39:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 23:41:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 23:41:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 23:42:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 23:48:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 23:50:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
+[2018-04-11 23:51:Program Success:32FFD5054B4D343420651351 D:\LYD\WorkSpace\GitHub\Breastfeeding_clock\Program\USER\obj\cabinet.hex
