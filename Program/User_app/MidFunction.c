@@ -18,6 +18,12 @@ void PIN_Init(void)
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	GPIO_SetBits(GPIOB,GPIO_Pin_9); 	//PB9 输出高电平,控制12864的背光，使单片机的引脚电压控制,降低功耗	
 
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);//PB 0,1,3,4用于12864的控制引脚
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+
 
 
 }

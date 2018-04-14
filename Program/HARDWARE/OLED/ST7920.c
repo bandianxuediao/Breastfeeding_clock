@@ -16,16 +16,16 @@
 //#define LCD_DATA_IN()  {GPIOD->CRH&=0X00000000;GPIOD->CRH|=0X44444444;}
 #define LCD_DATA_OUT() {GPIOA->CRL&=0X00000000;GPIOA->CRL|=0X77777777;}//PD8-15 推挽输出 
 //控制线***********************************************************
-#define LCD_RS_1    PCout(0)=1
-#define LCD_RS_0    PCout(0)=0
+#define LCD_RS_1    PBout(5)=1
+#define LCD_RS_0    PBout(5)=0
 //读写
-#define LCD_RW_1    PCout(1)=1
-#define LCD_RW_0    PCout(1)=0
+#define LCD_RW_1    PBout(4)=1
+#define LCD_RW_0    PBout(4)=0
 //使能
-#define LCD_EN_1    PCout(2)=1
-#define LCD_EN_0    PCout(2)=0
-#define  LCD_PSB_   PCout(3)
-#define  LCD_RST    PCout(4)
+#define LCD_EN_1    PBout(3)=1
+#define LCD_EN_0    PBout(3)=0
+#define  LCD_PSB_   PBout(0)
+#define  LCD_RST    PBout(1)
 
 //  0   1  10  11   0
 /*****************************************************************
@@ -101,13 +101,13 @@ void clrgdram(void)
 
 void LCDIO_Init(void)
 {
-	//  0   1  10  11   0
-    //Init_LCDIO();
-    RCC->APB2ENR |= 1 << 4; //使能PORTC时钟
 
-    GPIOC->CRL &= 0XFFF00000;	//PB12345 推挽输出 	  RRD
-    GPIOC->CRL |= 0X00033333;
-	
+//    RCC->APB2ENR |= 1 << 3; //使能PORTB时钟
+
+//    GPIOB->CRH &= 0X000F00FF;	//PB10 11 13 14 15 推挽输出 	  RRD
+//    GPIOB->CRH |= 0X33303300;
+//	
+	PIN_Init();
     RCC->APB2ENR |= 1 << 2; //使能PORTA时钟
     GPIOA->CRL &= 0X00000000;	//PA0-7 推挽输出 	WR
     GPIOA->CRL |= 0X33333333;
@@ -144,12 +144,12 @@ void ck_busy(void)
             LCD_RS_0;
             LCD_RW_1;
             LCD_EN_1;
-						delay_us(1);
+						delay_us(100);
             i = GPIOA->IDR;
             j = i ;
             j = j & 0x80;
 					delay_us(1);
-					//LCD_EN_0;
+					LCD_EN_0;
         }
 
         LCD_EN_0;

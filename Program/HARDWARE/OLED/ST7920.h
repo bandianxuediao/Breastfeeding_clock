@@ -13,37 +13,6 @@ extern u8 blank2[];
 #define nop   delay_us(3)
 
 
-
-#define  LCD_PSB_S   LCD_PSB_=1
-#define  LCD_PSB_R   LCD_PSB_=0
-
-#define  LCD_CSB_S   LCD_CSB_=1
-#define  LCD_CSB_R   LCD_CSB_=0
-
-#define  LCD_CSA_S   LCD_CSA_=1
-#define  LCD_CSA_R   LCD_CSA_=0
-
-#define  LCD_EN_S    LCD_EN_=1
-#define  LCD_EN_R    LCD_EN_=0
-
-#define  LCD_RW_S    LCD_RW_=1
-#define  LCD_RW_R    LCD_RW_=0
-
-#define  LCD_RS_S    LCD_RS_=1
-#define  LCD_RS_R    LCD_RS_=0
-
-
-//#define  LCD_PSB_   PGout(2)
-
-#define  LCD_CSB_   PGout(2)
-#define  LCD_CSA_   PGout(3)
-
-#define  LCD_EN_    PGout(5)
-
-#define  LCD_RW_    PGout(4)
-
-#define  LCD_RS_    PGout(6)
-
   //oled显示屏的范围定义
   #define OLED_X_MAX  128
   #define OLED_Y_MAX  64

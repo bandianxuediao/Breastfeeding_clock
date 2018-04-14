@@ -10,25 +10,28 @@ int main(void)
 //	delay_init();	    	 //延时函数初始化	  
 	NVIC_Configuration();  //设置NVIC中断分组2:2位抢占优先级，2位响应优先级 
 	//EE_IIC_Init();			 //EEPROM的IIC初始化
-	PIN_Init();
-EXTIX_Init();
-	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);		//使用了spi3，禁用JATG，保留SWD功能
-		lcd12864_init();//12864初始化
 
+EXTIX_Init();
+	 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_AFIO,ENABLE);
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);		//使用了spi3，禁用JATG，保留SWD功能
+ 
+	PIN_Init();
+	lcd12864_init();//12864初始化
+   
 			ShowWelcome();
 			delay_ms(200);
 	
 	while(1)
 	{		
 	oled_updatescr(0, 64);	   //屏幕刷新	
-	if(KEY1==0)	 //按键KEY1
-	{				 
-PBout(9)=1;
-	}
-	if(KEY1==1)	 //按键KEY1
-	{				 
-PBout(9)=0;
-	}
+//	if(KEY1==0)	 //按键KEY1
+//	{				 
+//PBout(9)=1;
+//	}
+//	if(KEY1==1)	 //按键KEY1
+//	{				 
+//PBout(9)=0;
+//	}
 
 //		if(max_waite==10000)
 //		{   lcdreset();                    //初始化LCD屏

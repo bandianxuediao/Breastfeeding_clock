@@ -641,10 +641,12 @@ void BackupCurrentDisplay(void)
 void ShowWelcome(void)
 {
 	clr_disp_mem();         //清除显存数据
-		oled_print(0, LINE1, "智能闹钟测试系统") ;  //字符输出函数
-		oled_print(0, LINE2, "世界一流欢迎使用") ;  //字符输出函数	
-//		show_right_button("列表");//显示右功能
-//		show_left_button("查看"); //显示左功能
+		oled_print(0, LINE0, "  哺乳记录器") ;  //字符输出函数
+		oled_print(0, LINE2, "愿李嘉钊小宝宝") ;  //字符输出函数	
+		oled_print(0, LINE3, "       健康成长") ;  //字符输出函数	
+	
+		show_right_button("菜单");//显示右功能
+		show_left_button("查看"); //显示左功能
 	oled_updatescr(0, 64);	   //屏幕刷新
 
 
