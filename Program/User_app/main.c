@@ -30,7 +30,7 @@ int main(void)
 //	}
 	if(KEY1==1)	 //°´¼üKEY1
 	{				 
-PBout(9)=0;
+		PBout(9)=0;
 	}
 
 //		if(max_waite==10000)
