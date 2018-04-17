@@ -5,15 +5,15 @@ typedef enum
 {
 	RUNNING,
 	TIME_OUT
-}DELAY_STATE;
+} DELAY_STATE;
 
 typedef struct
 {
 	u32 delay0_cnt;
 	u32 delay1_cnt;
 	u32 delay2_cnt;
-	u32 delay3_cnt;	
-}DELAY_DATA;
+	u32 delay3_cnt;
+} DELAY_DATA;
 
 extern void SysTickInit(void);
 extern void SysTickDelay(u32 DelayTime);
