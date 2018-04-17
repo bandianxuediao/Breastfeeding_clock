@@ -15,15 +15,15 @@ int main(void)
 	 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_AFIO,ENABLE);
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);		//使用了spi3，禁用JATG，保留SWD功能
  
-	PIN_Init();
-	lcd12864_init();//12864初始化
+//	PIN_Init();
+//	lcd12864_init();//12864初始化
  EXTIX_Init();  
-			ShowWelcome();
+//			ShowWelcome();
 			delay_ms(6000);
 	
 	while(1)
 	{		
-	oled_updatescr(0, 64);	   //屏幕刷新	
+//	oled_updatescr(0, 64);	   //屏幕刷新	
 //	if(KEY1==0)	 //按键KEY1
 //	{				 
 //PBout(9)=1;

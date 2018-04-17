@@ -36,7 +36,7 @@ void EXTIX_Init(void)
 
     KEY_Init();	 //	按键端口初始化
 
-  	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);	//使能复用功能时钟
+//  	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);	//使能复用功能时钟
 
 
 
@@ -61,7 +61,7 @@ void EXTIX_Init(void)
  
 
 //外部中断3服务程序
-void EXTI12_IRQHandler(void)
+void EXTI15_10_IRQHandler(void)
 {
 	delay_ms(100);//消抖
 	if(KEY1==0)	 //按键KEY1
