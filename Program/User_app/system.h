@@ -9,8 +9,9 @@ typedef enum
 	KEY_UP,
 	KEY_DOWN,
 	KEY_SET,
-	KEY_BACK
-
+	KEY_BACK,
+KEY_LEFT,
+	KEY_RIGHT
 
 } SYS_STATE;
 

@@ -28,6 +28,7 @@ int main(void)
 		//  oled_updatescr(0, 64);     //屏幕刷新
 if(KEY_state)
 {
+	//检测到按键之后应该点亮屏幕，并且重新装载屏幕背光关闭计数器
 		switch(KEY_state)
 		{
 			case KEY_UP:
