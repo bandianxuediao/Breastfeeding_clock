@@ -13,15 +13,15 @@ int main(void)
 	//EE_IIC_Init();             //EEPROM的IIC初始化
 
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);        //使用了spi3，禁用JATG，保留SWD功能
 
 	PIN_Init();
 	  lcd12864_init();//12864初始化
 	          ShowWelcome();
-	delay_ms(6000);
+	delay_ms(600);
 	Current_state = WELCOME_WAIT;
-  
+ Back_Light(0); 
 	while(1)
 	{
 		KEY_state=Detect_Pin_State();
