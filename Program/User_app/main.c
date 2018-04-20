@@ -9,7 +9,7 @@ int main(void)
 
 	SysTickInit();         //设置滴答定时器中断时间为1ms
 	//  delay_init();            //延时函数初始化
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+
 	//EE_IIC_Init();             //EEPROM的IIC初始化
 
 
@@ -17,17 +17,18 @@ int main(void)
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);        //使用了spi3，禁用JATG，保留SWD功能
 
 	PIN_Init();
+
 	lcd12864_init();//12864初始化
+		RTC_Init();
 	ShowWelcome();
 	delay_ms(600);
 	Current_state = WELCOME_WAIT;
-	Back_Light(0);
+//	Back_Light(0);
 
 	while(1)
 	{
 		KEY_state = Detect_Pin_State();
 
-		//  oled_updatescr(0, 64);     //屏幕刷新
 		if(KEY_state)
 		{
 			//检测到按键之后应该点亮屏幕，并且重新装载屏幕背光关闭计数器
@@ -111,6 +112,7 @@ int main(void)
 		//              max_waite=0;
 		//      }
 
+	oled_updatescr(0, 64);	   //屏幕刷新	
 	}
 }
 

@@ -73,21 +73,21 @@ void PIN_Init(void)
 
 }
 
-u8 compare_array(u8* array1, u8* array2)
-{
-	int i;
+//u8 compare_array(u8* array1, u8* array2)
+//{
+//	int i;
 
-	for(i = 0;; i < 1)
-	{
+//	for(i = 0;; i < 1)
+//	{
 
-		if(array1[i] != array2[i])
-			return 0;
+//		if(array1[i] != array2[i])
+//			return 0;
 
-		i++;
-	}
+//		i++;
+//	}
 
-	return 1;
-}
+//	return 1;
+//}
 
 
 

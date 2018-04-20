@@ -11,8 +11,11 @@ typedef enum
 	KEY_SET,
 	KEY_BACK,
 	KEY_LEFT,
-	KEY_RIGHT
-
+	KEY_RIGHT,
+DISPLAY_ITEM,//ÏÔÊ¾ÏîÄ¿×´Ì¬
+	
+	
+BACK	
 } SYS_STATE;
 
 

@@ -7,12 +7,15 @@
 #include "stm32f10x.h"
 #include "stm32f10x_tim.h"
 #include "stm32f10x_exti.h"
+#include "stm32f10x_rtc.h"
+#include "stm32f10x_bkp.h"
 #include "system.h"
 
 #include "led.h"
 #include "delay.h"
 #include "sys.h"
 #include "usart.h"
+#include "rtc.h"
 
 #include "KeyScan.h"
 #include "ST7920.h"

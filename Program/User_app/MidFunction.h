@@ -15,14 +15,15 @@
 
 //#define Back_Light(x) x?Back_Light_1:Back_Light_0
 
-
+extern SYS_STATE Current_state;
+extern SYS_STATE KEY_state;
 extern void PIN_Init(void);
 extern void pad_scan(void);
-extern void find_card(void);
-extern u8 compare_array(u8* array1, u8* array2);
+//extern void find_card(void);
+//extern u8 compare_array(u8* array1, u8* array2);
 extern void  Random_Adc_Init(void);
 extern u16 GET_Random(void);
-
+extern SYS_STATE Detect_Pin_State(void);
 
 
 extern u32 U32DataCMP(const u32* ptr, u8 length);

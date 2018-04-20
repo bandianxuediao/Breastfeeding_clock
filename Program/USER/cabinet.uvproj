@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_MD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\HARDWARE;..\STM32F10x_FWLib\inc;..\STM32F10x_FWLib\src;..\SYSTEM;..\USER;..\SYSTEM\sys;..\SYSTEM\delay;..\SYSTEM\usart;..\HARDWARE\LED;..\HARDWARE\BEEP;..\Msg_Process;..\User_app;..\HARDWARE\Irmp;..\HARDWARE\OLED;..\HARDWARE\HZ_Char;..\HARDWARE\RC531;..\HARDWARE\w25qxx;..\HARDWARE\TouchPad;..\HARDWARE\EEPROM;..\HARDWARE\exti</IncludePath>
+              <IncludePath>..\CORE;..\HARDWARE;..\STM32F10x_FWLib\inc;..\STM32F10x_FWLib\src;..\SYSTEM;..\USER;..\SYSTEM\sys;..\SYSTEM\delay;..\SYSTEM\usart;..\HARDWARE\LED;..\HARDWARE\BEEP;..\Msg_Process;..\User_app;..\HARDWARE\Irmp;..\HARDWARE\OLED;..\HARDWARE\HZ_Char;..\HARDWARE\RC531;..\HARDWARE\w25qxx;..\HARDWARE\TouchPad;..\HARDWARE\EEPROM;..\HARDWARE\exti;..\HARDWARE\RTC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -421,6 +421,11 @@
               <FileName>MidFunction.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User_app\MidFunction.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\RTC\rtc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -551,6 +556,11 @@
               <FileName>stm32f10x_wwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\STM32F10x_FWLib\src\stm32f10x_wwdg.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_bkp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\STM32F10x_FWLib\src\stm32f10x_bkp.c</FilePath>
             </File>
           </Files>
         </Group>
