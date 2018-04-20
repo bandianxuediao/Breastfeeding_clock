@@ -13,93 +13,97 @@ int main(void)
 	//EE_IIC_Init();             //EEPROM的IIC初始化
 
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);        //使用了spi3，禁用JATG，保留SWD功能
 
 	PIN_Init();
-	  lcd12864_init();//12864初始化
-	          ShowWelcome();
-	delay_ms(6000);
+	lcd12864_init();//12864初始化
+	ShowWelcome();
+	delay_ms(600);
 	Current_state = WELCOME_WAIT;
-  
+	Back_Light(0);
+
 	while(1)
 	{
-		KEY_state=Detect_Pin_State();
+		KEY_state = Detect_Pin_State();
+
 		//  oled_updatescr(0, 64);     //屏幕刷新
-if(KEY_state)
-{
-	//检测到按键之后应该点亮屏幕，并且重新装载屏幕背光关闭计数器
-		switch(KEY_state)
+		if(KEY_state)
 		{
-			case KEY_UP:
+			//检测到按键之后应该点亮屏幕，并且重新装载屏幕背光关闭计数器
+			switch(KEY_state)
 			{
-				switch(Current_state)
+				case KEY_UP:
 				{
-					case WELCOME_WAIT:
-						break;
+					switch(Current_state)
+					{
+						case WELCOME_WAIT:
+							break;
 
-					default:
-						break;
+						default:
+							break;
+					}
+
+					break;
 				}
 
-				break;
-			}
 
-
-			case KEY_DOWN:
-			{
-				switch(Current_state)
+				case KEY_DOWN:
 				{
-					case WELCOME_WAIT:
-						break;
+					switch(Current_state)
+					{
+						case WELCOME_WAIT:
+							break;
 
-					default:
-						break;
+						default:
+							break;
 
+					}
+
+					break;
 				}
 
-				break;
-			}
 
-
-			case KEY_SET:
-			{
-				switch(Current_state)
+				case KEY_SET:
 				{
-					case WELCOME_WAIT:
-						break;
+					switch(Current_state)
+					{
+						case WELCOME_WAIT:
+							break;
 
-					default:
-						break;
+						default:
+							break;
 
+					}
+
+					break;
 				}
 
-				break;
-			}
 
-
-			case KEY_BACK:
-			{
-				switch(Current_state)
+				case KEY_BACK:
 				{
-					case WELCOME_WAIT:
-						break;
+					switch(Current_state)
+					{
+						case WELCOME_WAIT:
+							break;
 
-					default:
-						break;
+						default:
+							break;
 
+					}
+
+					break;
 				}
 
-				break;
+				default:
+					break;
+
 			}
-
-			default:
-				break;
-
 		}
-	}
-	else
-	{delay_ms(10);}
+		else
+		{
+			delay_ms(10);
+		}
 
 		//      if(max_waite==10000)
 		//      {   lcdreset();                    //初始化LCD屏

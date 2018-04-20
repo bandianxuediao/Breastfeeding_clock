@@ -8,9 +8,12 @@
 #define PIN14  GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_14)//
 #define PIN15  GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_15)//
 
+#define Back_Light(x) x?(GPIO_SetBits(GPIOA, GPIO_Pin_15)):(GPIO_ResetBits(GPIOA, GPIO_Pin_15));
 
-extern u8 INPUT_PASS_STATE ; //用于表示处在哪个密码输入状态
-extern SYS_STATE Detect_Pin_State(void);
+//#define Back_Light_1  GPIO_SetBits(GPIOA, GPIO_Pin_15)
+//#define   Back_Light_0    GPIO_ResetBits(GPIOA, GPIO_Pin_15)
+
+//#define Back_Light(x) x?Back_Light_1:Back_Light_0
 
 
 extern void PIN_Init(void);
