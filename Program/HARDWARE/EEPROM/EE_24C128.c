@@ -115,7 +115,7 @@ u8 FindBox_FromIndex(u8 temp)
 	//      }
 	//      return 0;//箱号不相等
 	//  }
-	//  return 3;//此箱号为空
+	return 3;//此箱号为空
 }
 
 
@@ -125,31 +125,31 @@ u8 FindBox_FromIndex(u8 temp)
 //如果匹配卡号成功且密码标志位为0x11（有密码）保存密码并返回0x01，没有密码则返回0x02
 //ID错误返回3
 //箱号错误返回 4
-u8 Compare_Card(u8 box_num)
-{
-	//  u8 pBuffer[8];
-	//  AT24CXX_Read((box_num-1)*10+2500,pBuffer, 8);
-	//  if(pBuffer[0] == box_num)
-	//  {
-	//      if((pBuffer[1] == RC531_sbuf[9])&&(pBuffer[2] == RC531_sbuf[10])&&(pBuffer[3] == RC531_sbuf[11])&&(pBuffer[4] == RC531_sbuf[12]))
-	//      {
-	//          if(pBuffer[7] == 0x11) //有密码
-	//          {
-	//              Password[0] = pBuffer[5];
-	//              Password[1] = pBuffer[6];
-	//              return 0x01;
-	//          }
-	//          if(pBuffer[7] != 0x11) //没有密码
-	//          {
-	//              Password[0] = 0;
-	//              Password[1] = 0;
-	//              return 0x02;
-	//          }
-	//      }
-	//      return 3; // ID校验失败
-	//  }
-	//  return 4;   //箱号校验失败
-}
+//u8 Compare_Card(u8 box_num)
+//{
+//  u8 pBuffer[8];
+//  AT24CXX_Read((box_num-1)*10+2500,pBuffer, 8);
+//  if(pBuffer[0] == box_num)
+//  {
+//      if((pBuffer[1] == RC531_sbuf[9])&&(pBuffer[2] == RC531_sbuf[10])&&(pBuffer[3] == RC531_sbuf[11])&&(pBuffer[4] == RC531_sbuf[12]))
+//      {
+//          if(pBuffer[7] == 0x11) //有密码
+//          {
+//              Password[0] = pBuffer[5];
+//              Password[1] = pBuffer[6];
+//              return 0x01;
+//          }
+//          if(pBuffer[7] != 0x11) //没有密码
+//          {
+//              Password[0] = 0;
+//              Password[1] = 0;
+//              return 0x02;
+//          }
+//      }
+//      return 3; // ID校验失败
+//  }
+//  //  return 4;   //箱号校验失败
+//}
 
 //刷卡操作
 //将卡的信息存入索引，以及数据存储区
@@ -281,3 +281,5 @@ void AT24CXX_Write(u16 WriteAddr, u8 *pBuffer, u16 NumToWrite)
 		pBuffer++;
 	}
 }
+
+

@@ -408,11 +408,6 @@
               <FilePath>..\User_app\stm32f10x_it.c</FilePath>
             </File>
             <File>
-              <FileName>keyScan.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User_app\keyScan.c</FilePath>
-            </File>
-            <File>
               <FileName>display.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\OLED\display.c</FilePath>
@@ -426,6 +421,26 @@
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\RTC\rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>key_down.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User_app\key_down.c</FilePath>
+            </File>
+            <File>
+              <FileName>key_left.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User_app\key_left.c</FilePath>
+            </File>
+            <File>
+              <FileName>key_right.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User_app\key_right.c</FilePath>
+            </File>
+            <File>
+              <FileName>key_up.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User_app\key_up.c</FilePath>
             </File>
           </Files>
         </Group>

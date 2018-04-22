@@ -22,6 +22,18 @@ void EE_IIC_Init(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	GPIO_SetBits(GPIOB, GPIO_Pin_6 | GPIO_Pin_7); //PB10,PB11 输出高电平
+
+	//if(AT24CXX_ReadOneByte(INITIAL_ADDR) != 0x55) //判断是不是第一次启动，第一次启动将索引区清零
+	{
+		AT24CXX_WriteOneByte(INITIAL_ADDR, 0x55);
+		AT24CXX_WriteLenByte(6, 1801010620, 4);
+
+		AT24CXX_WriteLenByte(10, 0, 2);
+		AT24CXX_WriteLenByte(20, 0, 2);
+		AT24CXX_WriteLenByte(30, 0, 2);
+		AT24CXX_WriteLenByte(40, 0, 2);
+	}
+
 }
 //产生IIC起始信号
 void EE_IIC_Start(void)

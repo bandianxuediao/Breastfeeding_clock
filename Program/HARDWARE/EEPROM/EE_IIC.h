@@ -16,13 +16,13 @@
 
 //IO方向设置
 
-#define EE_SDA_IN()  {GPIOB->CRH&=0XFFFF0FFF;GPIOB->CRH|=(u32)8<<12;}
-#define EE_SDA_OUT() {GPIOB->CRH&=0XFFFF0FFF;GPIOB->CRH|=(u32)3<<12;}
+#define EE_SDA_IN()  {GPIOB->CRL&=0X0FFFFFFF;GPIOB->CRL|=(u32)8<<28;}
+#define EE_SDA_OUT() {GPIOB->CRL&=0X0FFFFFFF;GPIOB->CRL|=(u32)3<<28;}
 
 //IO操作函数
-#define EE_IIC_SCL    PBout(10) //SCL
-#define EE_IIC_SDA    PBout(11) //SDA    
-#define EE_READ_SDA   PBin(11)  //输入SDA 
+#define EE_IIC_SCL    PBout(6) //SCL
+#define EE_IIC_SDA    PBout(7) //SDA    
+#define EE_READ_SDA   PBin(7)  //输入SDA 
 
 //IIC所有操作函数
 void EE_IIC_Init(void);                //初始化IIC的IO口

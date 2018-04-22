@@ -6,40 +6,247 @@
 //LOGGER_INFO logger_info;
 //u8 temp_buffer[1056];//用于全局的中间缓冲区，非专用。
 u8 INPUT_PASS_STATE ; //用于表示处在哪个密码输入状态
-
-SYS_STATE Detect_Pin_State(void)
+EEP_index EepIndex;
+Time_Differ TimeDiffer;
+u16 TurnPage_Calc = 0; //翻页操作计数
+//==================================================================================================
+//| 函数名称 | TimeDiffer_Calc
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 时间差计算
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-18
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+void TimeDiffer_Calc(void)
 {
-	if(PIN10)
-	{
-		delay_ms(200);
+	u8 read_temp[10];
+	u8 month_date;
+	//      w_date;hour min
 
-		if(PIN10)
+	TurnPage_Calc = EepIndex.lactation;
+	AT24CXX_Read(((EepIndex.lactation - 1) * 6 + BASE_ADDR_LACTATION), read_temp, 6);
+	TurnPage_Calc--;
+	TimeDiffer.min = read_temp[4] - calendar.min;
+	TimeDiffer.hour = read_temp[3] - calendar.hour;
+	TimeDiffer.day = read_temp[2] - calendar.w_date;
+	TimeDiffer.month = read_temp[1] - calendar.w_month;
+	TimeDiffer.year = read_temp[0] - calendar.w_year;
+
+	if((read_temp[1] == 1) || (read_temp[1] == 3) || (read_temp[1] == 5) || (read_temp[1] == 7) || (read_temp[1] == 8) || (read_temp[1] == 10) || (read_temp[1] == 12))
+	{
+		month_date = 31;
+	}
+	else if((read_temp[1] == 4) || (read_temp[1] == 6) || (read_temp[1] == 9))
+	{
+		month_date = 30;
+	}
+	else if(read_temp[1] == 2)
+	{
+		month_date = 28;
+	}
+
+	if((TimeDiffer.min >= 0) || (TimeDiffer.hour >= 0) || (TimeDiffer.day >= 0) || (TimeDiffer.month >= 0) || (TimeDiffer.year >= 0))
+	{
+		return;
+	}
+
+	if(TimeDiffer.min <= 0)
+	{
+		if(TimeDiffer.hour <= 0)
 		{
-			return KEY_UP;
+			if(TimeDiffer.day <= 0)
+			{
+				if(TimeDiffer.month <= 0)
+				{
+					if(TimeDiffer.year <= 0)
+					{
+						//xxxx
+						return;
+					}
+					else
+					{
+						TimeDiffer.year -= 1;
+						TimeDiffer.month += 12;
+					}
+				}
+				else
+				{
+					TimeDiffer.month -= 1;
+					TimeDiffer.day += month_date;
+
+				}
+
+
+			}
+			else
+			{
+				TimeDiffer.day -= 1;
+				TimeDiffer.hour += 24;
+			}
+
+		}
+		else
+		{
+			TimeDiffer.hour -= 1;
+			TimeDiffer.min += 60;
+
+		}
+	}
+	else
+	{
+
+
+
+
+	}
+
+
+}
+
+//==================================================================================================
+//| 函数名称 | Detect_Pin_State
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 按键检测功能函数
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-18
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+void List_Display()
+{
+	u8 display_temp[30];
+
+	Current_index_read();//更新当前索引
+	clr_disp_mem();         //清除显存数据
+
+	switch(Current_state)
+	{
+		case DISPLAY_ITEM_LACTATION://显示项目状态--默认选中哺乳
+		{
+			if(EepIndex.lactation == 0) //如果存储条数为0，只显示第一行
+			{
+				sprintf((char*)display_temp, "共%d条|%d小时前", EepIndex.lactation, 0);
+				oled_print(0, LINE0, &display_temp[0]);//字符输出
+				show_left_button("哺乳"); //显示左功能
+
+			}
+			else
+			{
+
+
+			}
+
+			break;
+		}
+
+		case DISPLAY_ITEM_DRINK://显示项目状态--选中补水
+		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
+		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
+			break;
+	}
+
+
+	show_right_button("返回");//显示右功能
+	oled_updatescr(0, 64);     //屏幕刷新
+}
+//==================================================================================================
+//| 函数名称 | Detect_Pin_State
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 按键检测功能函数
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-18
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+void Current_index_read(void)
+{
+
+	EepIndex.lactation = AT24CXX_ReadLenByte(10, 2);
+	EepIndex.drink = AT24CXX_ReadLenByte(20, 2);
+	EepIndex.shit = AT24CXX_ReadLenByte(30, 2);
+	EepIndex.urinate = AT24CXX_ReadLenByte(40, 2);
+
+}
+
+//==================================================================================================
+//| 函数名称 | Detect_Pin_State
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 按键检测功能函数
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-18
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+void Detect_Pin_State(void)
+{
+	if(KEY_UP)
+	{
+		delay_ms(10);
+
+		if(KEY_UP)
+		{
+			KeyUp_Program();
+			return;
 		}
 	}
 
-	if(PIN11)
+	if(KEY_DOWN)
 	{
-		delay_ms(200);
+		delay_ms(10);
 
-		if(PIN11)
+		if(KEY_DOWN)
 		{
-			return KEY_DOWN;
+			KeyDown_Program();
+			return;
 		}
 	}
 
-	if(PIN12)
+	if(KEY_LEFT)
 	{
-		delay_ms(200);
+		delay_ms(10);
 
-		if(PIN12)
+		if(KEY_LEFT)
 		{
-			return KEY_SET;
+			KeyLeft_Program();
+			return;
 		}
 	}
 
-	return 0;
+	if(KEY_RIGHT)
+	{
+		delay_ms(10);
+
+		if(KEY_RIGHT)
+		{
+			KeyRight_Program();
+			return;
+		}
+	}
 }
 
 void PIN_Init(void)
@@ -47,46 +254,58 @@ void PIN_Init(void)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA, ENABLE ); //使能GPIOA时钟
 	RCC_APB2PeriphClockCmd( RCC_APB2Periph_AFIO, ENABLE );
-
+	//PA15配置为背光控制，高有效
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   //推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	GPIO_SetBits(GPIOA, GPIO_Pin_15);   //PB12 输出高电平,检测红外电平
+	GPIO_SetBits(GPIOA, GPIO_Pin_15);   //PA15 输出高电平,检测红外电平
+
+	//PA8配置为KEY_DOWN 按键检测管脚，配置高输入，检测低电平
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU ;   //上拉输入
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB, ENABLE ); //使能GPIOB时钟
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD ;   //上拉输入
+	//PB12配置为红外检测    配置高输入，检测低电平
+	//PB13配置为KEY_LEF 按键检测管脚，配置高输入，检测低电平
+	//PB14配置为KEY_UP      按键检测管脚，配置高输入，检测低电平
+	//PB15配置为KEY_RIGHT   按键检测管脚，配置高输入，检测低电平
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU ;   //上拉输入
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	//GPIO_SetBits(GPIOB,GPIO_Pin_12);  //PB12 输出高电平,检测红外电平
 
-
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);//PB 0,1,3,4用于12864的控制引脚
+	//PB 0,1,3,4用于12864的控制引脚
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-
+	//PA0-7配置为ST7920数据线
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   //推挽输出
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 }
 
 //u8 compare_array(u8* array1, u8* array2)
 //{
-//	int i;
+//  int i;
 
-//	for(i = 0;; i < 1)
-//	{
+//  for(i = 0;; i < 1)
+//  {
 
-//		if(array1[i] != array2[i])
-//			return 0;
+//      if(array1[i] != array2[i])
+//          return 0;
 
-//		i++;
-//	}
+//      i++;
+//  }
 
-//	return 1;
+//  return 1;
 //}
 
 

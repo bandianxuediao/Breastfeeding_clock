@@ -1241,10 +1241,12 @@ void Dis_menu(void)
 void ShowWelcome(void)
 {
 	clr_disp_mem();         //清除显存数据
-	show_title("哺乳记录  ") ;  //字符输出函数
-//	oled_print(0, LINE1, "愿李嘉钊小宝宝") ;  //字符输出函数
-//	oled_print(0, LINE2, "       健康成长") ;  //字符输出函数
-
+	lcdreset();                    //初始化LCD屏
+	clrgdram();
+	show_title("查看记录  ") ;  //字符输出函数
+	//  oled_print(0, LINE1, "愿李嘉钊小宝宝") ;  //字符输出函数
+	//  oled_print(0, LINE2, "       健康成长") ;  //字符输出函数
+	oled_print(2, LINE4, "   "); //字符输出
 	show_right_button("菜单");//显示右功能
 	show_left_button("查看"); //显示左功能
 	oled_updatescr(0, 64);     //屏幕刷新
@@ -1267,14 +1269,50 @@ void ShowWelcome(void)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void Display_Items(void)
+void Display_Items(u8 state)
 {
 	clr_disp_mem();         //清除显存数据
 	oled_print(0, LINE0, "项目") ;  //字符输出函数
-	oled_print(0, LINE1, "哺乳		补水") ;  //字符输出函数
-	oled_print(0, LINE2, "大便		小便") ;  //字符输出函数
-Current_state=DISPLAY_ITEM;
-	
+	oled_print(0, LINE1, "  哺乳 		补水") ;  //字符输出函数
+	oled_print(0, LINE2, "  大便 		小便") ;  //字符输出函数
+
+	switch(state)
+	{
+		case 1:
+		{
+			oled_print(0, LINE1, "√") ;  //字符输出函数
+			Current_state = DISPLAY_ITEM_LACTATION; //当前状态置为项目显示
+			break;
+		}
+
+		case 2:
+		{
+			oled_print(0, LINE2, "√") ;  //字符输出函数
+
+			Current_state = DISPLAY_ITEM_SHIT; //当前状态置为项目显示
+			break;
+		}
+
+		case 3:
+		{
+
+			oled_print(4, LINE1, "√") ;  //字符输出函数
+			Current_state = DISPLAY_ITEM_DRINK; //当前状态置为项目显示
+			break;
+		}
+
+		case 4:
+		{
+
+			oled_print(4, LINE2, "√") ;  //字符输出函数
+			Current_state = DISPLAY_ITEM_URINATE; //当前状态置为项目显示
+			break;
+		}
+
+		default:
+			break;
+	}
+
 	show_right_button("返回");//显示右功能
 	show_left_button("查看"); //显示左功能
 	oled_updatescr(0, 64);     //屏幕刷新
@@ -1286,42 +1324,47 @@ Current_state=DISPLAY_ITEM;
 
 void Show_Time(void)
 {
-		u8 tim_temp[30];
-	if(Current_state == WELCOME_WAIT)
-	{
-//			sprintf((char*)tim_temp,"%d-%02d-%02d",calendar.w_year,calendar.w_month,calendar.w_date);
-//			new_front_state=0;//从整汉字处开始输入
-//			oled_print(1, LINE3, &tim_temp[0]);//字符输出
-			sprintf((char*)tim_temp,"%02d:%02d:%02d",calendar.hour,calendar.min,calendar.sec);
-			new_front_state=0;//从半汉字开始输入
-			oled_print(2, LINE4, &tim_temp[0]);//字符输出
-			switch(calendar.week)
-			{
-				case 0:
-					sprintf((char*)tim_temp,"周日");
-				break;
-				case 1:
-					sprintf((char*)tim_temp,"周一");
-				break;
-				case 2:
-					sprintf((char*)tim_temp,"周二");
-				break;
-				case 3:
-					sprintf((char*)tim_temp,"周三");
-				break;
-				case 4:
-					sprintf((char*)tim_temp,"周四");
-				break;
-				case 5:
-					sprintf((char*)tim_temp,"周五");
-				break;
-				case 6:
-					sprintf((char*)tim_temp,"周六");
-				break;
-			}
-		oled_print(6, LINE4, &tim_temp[0]);//字符输出
+	u8 tim_temp[30];
 
-//		oled_updatescr(0, 64);	   //屏幕刷新
+	switch(Current_state)
+	{
+		case WELCOME_WAIT:
+
+		case    LACTATION_LIST://显示哺乳时间列表状态
+		case    DRINK_LIST://显示补水列表状态
+		case    MODIFY_DRINK://修改补水量状态
+		case    MODIFY_DRINK_SURE://修改补水量确认状态
+		case    SHIT_LIST://显示大便时间列表状态
+		case    URINATE_LIST://显示小编时间列表状态
+
+		{
+			//      ShowWelcome();
+			//          sprintf((char*)tim_temp,"%d-%02d-%02d",calendar.w_year,calendar.w_month,calendar.w_date);
+			//          new_front_state=0;//从整汉字处开始输入
+			//          oled_print(1, LINE3, &tim_temp[0]);//字符输出
+			sprintf((char*)tim_temp, "%02d:%02d:%02d", calendar.hour, calendar.min, calendar.sec);
+			new_front_state = 0; //从半汉字开始输入
+			oled_print(2, LINE4, &tim_temp[0]);//字符输出
+			oled_updatescr(0, 64);     //屏幕刷新
+			break;
+		}
+
+		case DISPLAY_ITEM_LACTATION://显示项目状态--默认选中哺乳
+		case DISPLAY_ITEM_DRINK://显示项目状态--选中补水
+		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
+		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
+		{
+			oled_hline(2, 8, 111, 0);//在OLED显示屏上绘制一条亮/暗的横线
+			oled_print(3, LINE4, "↑↓");//在显示屏底部显示状态信息
+			oled_updatescr(0, 64);     //屏幕刷新
+
+
+
+		}
+
+		default:
+			//          clr_disp_mem();         //清除显存数据
+			break;
 	}
 }
 

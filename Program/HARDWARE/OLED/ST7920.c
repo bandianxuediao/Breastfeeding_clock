@@ -109,9 +109,9 @@ void LCDIO_Init(void)
 	//    GPIOB->CRH |= 0X33303300;
 	//
 	PIN_Init();
-	RCC->APB2ENR |= 1 << 2; //使能PORTA时钟
-	GPIOA->CRL &= 0X00000000;   //PA0-7 推挽输出    WR
-	GPIOA->CRL |= 0X33333333;
+	//  RCC->APB2ENR |= 1 << 2; //使能PORTA时钟
+	//  GPIOA->CRL &= 0X00000000;   //PA0-7 推挽输出    WR
+	//  GPIOA->CRL |= 0X33333333;
 
 	LCD_PSB_S;
 	LCD_RST = 1;
@@ -171,9 +171,9 @@ void write_com(unsigned char cmdcode)
 	LCD_RW_0;
 	delay_us(1);
 	LCD_EN_1;
-	delay_us(22);////////////////////在数据写入的时候加入适当的延时
+	delay_us(21);////////////////////在数据写入的时候加入适当的延时
 	Lcd_Bus(cmdcode);
-	delay_us(10);
+	delay_us(1);
 	LCD_EN_0;
 	delay_us(1);
 
