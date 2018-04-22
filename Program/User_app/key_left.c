@@ -28,7 +28,7 @@ void KeyLeft_Program(void)
 
 		case DISPLAY_ITEM_LACTATION:
 
-
+			List_Display();
 
 			Current_state = LACTATION_LIST;
 			break;

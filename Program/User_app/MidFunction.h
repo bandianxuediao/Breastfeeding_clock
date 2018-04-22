@@ -48,6 +48,8 @@ extern void PIN_Init(void);
 extern void pad_scan(void);
 //extern void find_card(void);
 //extern u8 compare_array(u8* array1, u8* array2);
+void TimeDiffer_Calc(u16 num, u16 base);
+void List_Display(void);
 
 extern void Current_index_read(void);
 

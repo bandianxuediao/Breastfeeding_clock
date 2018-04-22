@@ -24,90 +24,86 @@ u16 TurnPage_Calc = 0; //翻页操作计数
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void TimeDiffer_Calc(void)
+void TimeDiffer_Calc(u16 num, u16 base)
 {
 	u8 read_temp[10];
+	u8 display_temp[30];
 	u8 month_date;
-	//      w_date;hour min
 
-	TurnPage_Calc = EepIndex.lactation;
-	AT24CXX_Read(((EepIndex.lactation - 1) * 6 + BASE_ADDR_LACTATION), read_temp, 6);
-	TurnPage_Calc--;
-	TimeDiffer.min = read_temp[4] - calendar.min;
-	TimeDiffer.hour = read_temp[3] - calendar.hour;
-	TimeDiffer.day = read_temp[2] - calendar.w_date;
-	TimeDiffer.month = read_temp[1] - calendar.w_month;
-	TimeDiffer.year = read_temp[0] - calendar.w_year;
-
-	if((read_temp[1] == 1) || (read_temp[1] == 3) || (read_temp[1] == 5) || (read_temp[1] == 7) || (read_temp[1] == 8) || (read_temp[1] == 10) || (read_temp[1] == 12))
+	if(num == 0)
 	{
-		month_date = 31;
-	}
-	else if((read_temp[1] == 4) || (read_temp[1] == 6) || (read_temp[1] == 9))
-	{
-		month_date = 30;
-	}
-	else if(read_temp[1] == 2)
-	{
-		month_date = 28;
-	}
+		sprintf((char*)display_temp, "共0条|无数据", num, 0);
 
-	if((TimeDiffer.min >= 0) || (TimeDiffer.hour >= 0) || (TimeDiffer.day >= 0) || (TimeDiffer.month >= 0) || (TimeDiffer.year >= 0))
-	{
-		return;
-	}
-
-	if(TimeDiffer.min <= 0)
-	{
-		if(TimeDiffer.hour <= 0)
-		{
-			if(TimeDiffer.day <= 0)
-			{
-				if(TimeDiffer.month <= 0)
-				{
-					if(TimeDiffer.year <= 0)
-					{
-						//xxxx
-						return;
-					}
-					else
-					{
-						TimeDiffer.year -= 1;
-						TimeDiffer.month += 12;
-					}
-				}
-				else
-				{
-					TimeDiffer.month -= 1;
-					TimeDiffer.day += month_date;
-
-				}
-
-
-			}
-			else
-			{
-				TimeDiffer.day -= 1;
-				TimeDiffer.hour += 24;
-			}
-
-		}
-		else
-		{
-			TimeDiffer.hour -= 1;
-			TimeDiffer.min += 60;
-
-		}
 	}
 	else
 	{
 
 
+		TurnPage_Calc = num;
+		AT24CXX_Read(((num - 1) * 6 + base), read_temp, 6);
+		TurnPage_Calc--;
+		TimeDiffer.min = read_temp[4] - calendar.min;
+		TimeDiffer.hour = read_temp[3] - calendar.hour;
+		TimeDiffer.day = read_temp[2] - calendar.w_date;
+		TimeDiffer.month = read_temp[1] - calendar.w_month;
+		TimeDiffer.year = read_temp[0] - calendar.w_year;
 
+		if((read_temp[1] == 1) || (read_temp[1] == 3) || (read_temp[1] == 5) || (read_temp[1] == 7) || (read_temp[1] == 8) || (read_temp[1] == 10) || (read_temp[1] == 12))
+		{
+			month_date = 31;
+		}
+		else if((read_temp[1] == 4) || (read_temp[1] == 6) || (read_temp[1] == 9))
+		{
+			month_date = 30;
+		}
+		else if(read_temp[1] == 2)
+		{
+			month_date = 28;
+		}
 
+		if(TimeDiffer.min < 0)
+		{
+			TimeDiffer.min += 60;
+			TimeDiffer.hour -= 1;
+		}
+
+		if(TimeDiffer.hour < 0)
+		{
+			TimeDiffer.hour += 24;
+			TimeDiffer.day -= 1;
+		}
+
+		if(TimeDiffer.day < 0)
+		{
+			TimeDiffer.day += month_date;
+		}
+
+		if(TimeDiffer.month < 0)
+		{
+			TimeDiffer.month += 12;
+			TimeDiffer.year -= 1;
+		}
+
+		if(TimeDiffer.year < 0)
+		{
+			sprintf((char*)display_temp, "共%d条|error", num, 0);
+		}
+		else
+		{
+			if(TimeDiffer.month == 0)
+			{
+				sprintf((char*)display_temp, "共%d条|%d.%d小时", num, TimeDiffer.day * 24 + TimeDiffer.hour, TimeDiffer.min * 10 / 60);
+			}
+			else
+			{
+				sprintf((char*)display_temp, "共%d条|超时", num, 0);
+			}
+
+		}
 	}
 
-
+	oled_print(0, LINE0, &display_temp[0]);//字符输出
+	oled_updatescr(0, 64);     //屏幕刷新
 }
 
 //==================================================================================================
@@ -125,7 +121,7 @@ void TimeDiffer_Calc(void)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void List_Display()
+void List_Display(void)
 {
 	u8 display_temp[30];
 
@@ -136,19 +132,8 @@ void List_Display()
 	{
 		case DISPLAY_ITEM_LACTATION://显示项目状态--默认选中哺乳
 		{
-			if(EepIndex.lactation == 0) //如果存储条数为0，只显示第一行
-			{
-				sprintf((char*)display_temp, "共%d条|%d小时前", EepIndex.lactation, 0);
-				oled_print(0, LINE0, &display_temp[0]);//字符输出
-				show_left_button("哺乳"); //显示左功能
-
-			}
-			else
-			{
-
-
-			}
-
+			TimeDiffer_Calc(EepIndex.lactation, BASE_ADDR_LACTATION);
+			show_left_button("哺乳");//显示右功能
 			break;
 		}
 
