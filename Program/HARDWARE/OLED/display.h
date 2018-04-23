@@ -123,6 +123,11 @@ extern void FlashCursor(void);
 extern void ShowMainMenu(void);
 extern void ShowWelcome(void);
 extern void ShowInput(u8 state);
+
+void show_left_button(unsigned char *msg);
+void show_right_button(unsigned char *msg);
+
+
 //  extern void Show_SET_KEY(u8 state);
 
 //  extern void ShowDeviceType(unsigned char type);

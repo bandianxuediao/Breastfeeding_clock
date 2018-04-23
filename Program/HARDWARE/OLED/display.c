@@ -1287,7 +1287,7 @@ void Display_Items(u8 state)
 
 		case 2:
 		{
-			oled_print(0, LINE2, "√") ;  //字符输出函数
+			oled_print(0, LINE2, "√") ;  //大便
 
 			Current_state = DISPLAY_ITEM_SHIT; //当前状态置为项目显示
 			break;
@@ -1296,7 +1296,7 @@ void Display_Items(u8 state)
 		case 3:
 		{
 
-			oled_print(4, LINE1, "√") ;  //字符输出函数
+			oled_print(4, LINE1, "√") ;  //补水
 			Current_state = DISPLAY_ITEM_DRINK; //当前状态置为项目显示
 			break;
 		}
@@ -1304,7 +1304,7 @@ void Display_Items(u8 state)
 		case 4:
 		{
 
-			oled_print(4, LINE2, "√") ;  //字符输出函数
+			oled_print(4, LINE2, "√") ;  //小便
 			Current_state = DISPLAY_ITEM_URINATE; //当前状态置为项目显示
 			break;
 		}

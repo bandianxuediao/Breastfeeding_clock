@@ -28,7 +28,22 @@ void KeyRight_Program(void)
 			ShowWelcome();
 			Current_state = WELCOME_WAIT;
 			break;
-
+case LACTATION_LIST:
+				Display_Items(1);   //默认为选中Lactation
+			Current_state = DISPLAY_ITEM_LACTATION; //当前状态置为项目显示
+		break;
+case DRINK_LIST:
+				Display_Items(3);   //默认为选中Lactation
+			Current_state = DISPLAY_ITEM_DRINK; //当前状态置为项目显示
+		break;
+case SHIT_LIST:
+				Display_Items(2);   //默认为选中Lactation
+			Current_state = DISPLAY_ITEM_SHIT; //当前状态置为项目显示
+		break;
+case URINATE_LIST:
+				Display_Items(4);   //默认为选中Lactation
+			Current_state = DISPLAY_ITEM_URINATE; //当前状态置为项目显示
+		break;
 		case WELCOME_WAIT:
 			break;
 

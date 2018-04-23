@@ -51,7 +51,7 @@ extern void pad_scan(void);
 void TimeDiffer_Calc(u16 num, u16 base);
 void List_Display(void);
 
-extern void Current_index_read(void);
+extern u16 Current_index_read(u16 base);
 
 extern void  Random_Adc_Init(void);
 extern u16 GET_Random(void);

@@ -9,6 +9,38 @@ u8 INPUT_PASS_STATE ; //用于表示处在哪个密码输入状态
 EEP_index EepIndex;
 Time_Differ TimeDiffer;
 u16 TurnPage_Calc = 0; //翻页操作计数
+
+//==================================================================================================
+//| 函数名称 | TimeDiffer_Calc
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 时间差计算
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-18
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+void Storage_One_Data(u16 base)
+{
+	u16 num=0;
+	u8 write_temp[10];
+	num =  Current_index_read(base);//更新当前索引
+	
+	
+		AT24CXX_Write(((num - 1) * 6 + base), write_temp, 6);	
+
+
+
+
+
+}
+
+
 //==================================================================================================
 //| 函数名称 | TimeDiffer_Calc
 //|----------|--------------------------------------------------------------------------------------
@@ -125,21 +157,40 @@ void List_Display(void)
 {
 	u8 display_temp[30];
 
-	Current_index_read();//更新当前索引
+
 	clr_disp_mem();         //清除显存数据
 
 	switch(Current_state)
 	{
 		case DISPLAY_ITEM_LACTATION://显示项目状态--默认选中哺乳
 		{
+				Current_index_read(BASE_ADDR_LACTATION);//更新当前索引
 			TimeDiffer_Calc(EepIndex.lactation, BASE_ADDR_LACTATION);
 			show_left_button("哺乳");//显示右功能
 			break;
 		}
 
 		case DISPLAY_ITEM_DRINK://显示项目状态--选中补水
+					{
+							Current_index_read(BASE_ADDR_DRINK);//更新当前索引
+			TimeDiffer_Calc(EepIndex.drink, BASE_ADDR_DRINK);
+			show_left_button("补水");//显示右功能
+			break;
+		}
 		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
+					{
+							Current_index_read(BASE_ADDR_SHIT);//更新当前索引
+			TimeDiffer_Calc(EepIndex.shit, BASE_ADDR_SHIT);
+			show_left_button("大便");//显示右功能
+			break;
+		}
 		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
+					{
+							Current_index_read(BASE_ADDR_URINATE);//更新当前索引
+			TimeDiffer_Calc(EepIndex.urinate, BASE_ADDR_URINATE);
+			show_left_button("小便");//显示右功能
+			break;
+		}
 			break;
 	}
 
@@ -162,14 +213,27 @@ void List_Display(void)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void Current_index_read(void)
+u16 Current_index_read(u16 base)
 {
+switch(base)
+	{
+		case BASE_ADDR_LACTATION:
+				EepIndex.lactation = AT24CXX_ReadLenByte(10, 2);
+		return EepIndex.lactation;
+ case BASE_ADDR_DRINK:  
 
-	EepIndex.lactation = AT24CXX_ReadLenByte(10, 2);
 	EepIndex.drink = AT24CXX_ReadLenByte(20, 2);
-	EepIndex.shit = AT24CXX_ReadLenByte(30, 2);
+ return EepIndex.drink;
+ case BASE_ADDR_SHIT:  
+		EepIndex.shit = AT24CXX_ReadLenByte(30, 2); 
+ return EepIndex.shit;
+ case BASE_ADDR_URINATE: 
 	EepIndex.urinate = AT24CXX_ReadLenByte(40, 2);
-
+	
+return EepIndex.urinate;
+default:
+	break;
+}
 }
 
 //==================================================================================================
