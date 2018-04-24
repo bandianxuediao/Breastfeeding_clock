@@ -7,8 +7,150 @@
 //u8 temp_buffer[1056];//用于全局的中间缓冲区，非专用。
 u8 INPUT_PASS_STATE ; //用于表示处在哪个密码输入状态
 EEP_index EepIndex;
-Time_Differ TimeDiffer;
+Time_Struct TimeDiffer;
+Time_Struct Temp_Time;
 u16 TurnPage_Calc = 0; //翻页操作计数
+//==================================================================================================
+//| 函数名称 | Current_index_read
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 获取当前索引值（共存了多少个）
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-18
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+u16 Current_index_read(u16 base)
+{
+	switch(base)
+	{
+		case BASE_ADDR_LACTATION:
+			EepIndex.lactation = AT24CXX_ReadLenByte(10, 2);
+			return EepIndex.lactation;
+
+		case BASE_ADDR_DRINK:
+
+			EepIndex.drink = AT24CXX_ReadLenByte(20, 2);
+			return EepIndex.drink;
+
+		case BASE_ADDR_SHIT:
+			EepIndex.shit = AT24CXX_ReadLenByte(30, 2);
+			return EepIndex.shit;
+
+		case BASE_ADDR_URINATE:
+			EepIndex.urinate = AT24CXX_ReadLenByte(40, 2);
+
+			return EepIndex.urinate;
+
+		default:
+			break;
+	}
+}
+//==================================================================================================
+//| 函数名称 | Current_index_write
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 存储索引值，并更新显示索引
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-18
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |   u16 WriteAddr, u32 DataToWrite, u8 Len
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+u16 Current_index_write(u16 base,u16 num)
+{
+	switch(base)
+	{
+		case BASE_ADDR_LACTATION:
+			 AT24CXX_WriteLenByte(10, num,2);
+		EepIndex.lactation=num;
+			break;
+
+		case BASE_ADDR_DRINK:
+
+			AT24CXX_WriteLenByte(20, num,2);
+		EepIndex.drink=num;
+			break;
+
+		case BASE_ADDR_SHIT:
+			AT24CXX_WriteLenByte(30,num, 2);
+		EepIndex.shit=num;
+			break;
+
+		case BASE_ADDR_URINATE:
+			AT24CXX_WriteLenByte(40,num, 2);
+EepIndex.urinate=num;
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+//==================================================================================================
+//| 函数名称 | Renovate_List
+//|----------|--------------------------------------------------------------------------------------
+//| 函数功能 | 列表刷新
+//|----------|--------------------------------------------------------------------------------------
+//| 输入参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 返回参数 |
+//|----------|--------------------------------------------------------------------------------------
+//| 函数设计 | 编写人：李亚东    时间：2018-04-24
+//|----------|--------------------------------------------------------------------------------------
+//|   备注   |direction 0,左键向上   1，右键向下
+//|----------|--------------------------------------------------------------------------------------
+//| 修改记录 | 修改人：          时间：         修改内容：
+//==================================================================================================
+void Renovate_List(u16 base , u8 direction)
+{
+	u8 read_temp[14];
+	u32 timecount=0;
+	switch(base)
+	{
+		case BASE_ADDR_LACTATION:
+AT24CXX_Read((EepIndex.lactation-- * 6 + base), read_temp, 6);
+		
+		SecTo_Time(read_temp);
+
+			sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year-2000,Temp_Time.month,Temp_Time.day,Temp_Time.hour,Temp_Time.min);
+			new_front_state = 0; //从半汉字开始输入
+			oled_print(0, LINE1, &read_temp[0]);//字符输出
+			oled_updatescr(0, 64);     //屏幕刷新
+			break;
+
+		case BASE_ADDR_DRINK:
+
+//AT24CXX_Read((num * 6 + base), read_temp, 6);
+//		EepIndex.drink=num;
+//			break;
+
+//		case BASE_ADDR_SHIT:
+//AT24CXX_Read((num * 6 + base), read_temp, 6);
+//		EepIndex.shit=num;
+//			break;
+
+//		case BASE_ADDR_URINATE:
+//		AT24CXX_Read((num * 6 + base), read_temp, 6);
+//EepIndex.urinate=num;
+//			break;
+
+		default:
+			break;
+	}
+
+
+}
 
 //==================================================================================================
 //| 函数名称 | Storage_One_Data
@@ -32,7 +174,7 @@ void Storage_One_Data(u16 base)
 	u32 timecount_crc = 0;
 	u8 write_temp[10];
 	u8 read_temp[10];
-	num =  Current_index_read(base);//更新当前索引
+	num =  Current_index_read(base);//读取当前索引
 	timecount = RTC_GetCounter();//获取当前秒计数
 	write_temp[0] = timecount;
 	write_temp[1] = timecount >> 8;
@@ -40,18 +182,20 @@ void Storage_One_Data(u16 base)
 	write_temp[3] = timecount >> 24;
 
 
-	AT24CXX_Write(((num - 1) * 6 + base), write_temp, 6);
+	AT24CXX_Write((num * 6 + base), write_temp, 6);
 	delay_ms(50);
-	AT24CXX_Read(((num - 1) * 6 + base), read_temp, 6);
+	AT24CXX_Read((num * 6 + base), read_temp, 6);
 	timecount_crc += read_temp[0];
 	timecount_crc += read_temp[1] << 8;
 	timecount_crc += read_temp[2] << 16;
 	timecount_crc += read_temp[3] << 24;
 
-	if(timecount_crc == timecount)
+	if(timecount_crc == timecount)//再次读出进行校验
 	{
 		//存储成功，刷新列表
-
+		num++;
+Current_index_write(base,num);//更新EEPROM中的索引信息
+		Renovate_List(base,1);
 
 	}
 	else
@@ -61,6 +205,7 @@ void Storage_One_Data(u16 base)
 	}
 
 }
+
 
 
 //==================================================================================================
@@ -225,47 +370,7 @@ void List_Display(void)
 	show_right_button("返回");//显示右功能
 	oled_updatescr(0, 64);     //屏幕刷新
 }
-//==================================================================================================
-//| 函数名称 | Detect_Pin_State
-//|----------|--------------------------------------------------------------------------------------
-//| 函数功能 | 按键检测功能函数
-//|----------|--------------------------------------------------------------------------------------
-//| 输入参数 |
-//|----------|--------------------------------------------------------------------------------------
-//| 返回参数 |
-//|----------|--------------------------------------------------------------------------------------
-//| 函数设计 | 编写人：李亚东    时间：2018-04-18
-//|----------|--------------------------------------------------------------------------------------
-//|   备注   |
-//|----------|--------------------------------------------------------------------------------------
-//| 修改记录 | 修改人：          时间：         修改内容：
-//==================================================================================================
-u16 Current_index_read(u16 base)
-{
-	switch(base)
-	{
-		case BASE_ADDR_LACTATION:
-			EepIndex.lactation = AT24CXX_ReadLenByte(10, 2);
-			return EepIndex.lactation;
 
-		case BASE_ADDR_DRINK:
-
-			EepIndex.drink = AT24CXX_ReadLenByte(20, 2);
-			return EepIndex.drink;
-
-		case BASE_ADDR_SHIT:
-			EepIndex.shit = AT24CXX_ReadLenByte(30, 2);
-			return EepIndex.shit;
-
-		case BASE_ADDR_URINATE:
-			EepIndex.urinate = AT24CXX_ReadLenByte(40, 2);
-
-			return EepIndex.urinate;
-
-		default:
-			break;
-	}
-}
 
 //==================================================================================================
 //| 函数名称 | Detect_Pin_State

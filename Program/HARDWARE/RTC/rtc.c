@@ -52,7 +52,7 @@ u8 RTC_Init(void)
 		RTC_EnterConfigMode();/// 允许配置
 		RTC_SetPrescaler(32767); //设置RTC预分频的值
 		RTC_WaitForLastTask();  //等待最近一次对RTC寄存器的写操作完成
-		RTC_Set(2017, 3, 14, 17, 02, 30); //设置时间
+		RTC_Set(2018, 3, 14, 17, 02, 30); //设置时间
 		RTC_ExitConfigMode(); //退出配置模式
 		BKP_WriteBackupRegister(BKP_DR1, 0X5050);   //向指定的后备寄存器中写入用户程序数据
 	}
@@ -290,6 +290,72 @@ u8 RTC_Get(void)
 	calendar.week = RTC_Get_Week(calendar.w_year, calendar.w_month, calendar.w_date); //获取星期
 	return 0;
 }
+
+u8 SecTo_Time(u8 *read_temp)
+{
+	static u16 daycnt = 0;
+	u32 timecount=0;
+	u32 temp = 0;
+	u16 temp1 = 0;
+	
+	timecount += read_temp[0];
+	timecount += read_temp[1] << 8;
+	timecount += read_temp[2] << 16;
+	timecount += read_temp[3] << 24;
+	
+	temp = timecount / 86400; //得到天数(秒钟数对应的)
+
+	if(daycnt != temp) //超过一天了
+	{
+		daycnt = temp;
+		temp1 = 2018; //从2018年开始
+
+		while(temp >= 365)
+		{
+			if(Is_Leap_Year(temp1))//是闰年
+			{
+				if(temp >= 366)temp -= 366; //闰年的秒钟数
+				else
+				{
+					temp1++;
+					break;
+				}
+			}
+			else temp -= 365; //平年
+
+			temp1++;
+		}
+
+		Temp_Time.year = temp1; //得到年份
+		temp1 = 0;
+
+		while(temp >= 28) //超过了一个月
+		{
+			if(Is_Leap_Year(Temp_Time.year) && temp1 == 1) //当年是不是闰年/2月份
+			{
+				if(temp >= 29)temp -= 29; //闰年的秒钟数
+				else break;
+			}
+			else
+			{
+				if(temp >= mon_table[temp1])temp -= mon_table[temp1]; //平年
+				else break;
+			}
+
+			temp1++;
+		}
+
+		Temp_Time.month = temp1 + 1; //得到月份
+		Temp_Time.day = temp + 1; //得到日期
+	}
+
+	temp = timecount % 86400;       //得到秒钟数
+	Temp_Time.hour = temp / 3600;    //小时
+	Temp_Time.min = (temp % 3600) / 60; //分钟
+	return 0;
+}
+
+
 //获得现在是星期几
 //功能描述:输入公历日期得到星期(只允许1901-2099年)
 //输入参数：公历年月日
