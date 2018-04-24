@@ -39,26 +39,29 @@ void KeyLeft_Program(void)
 
 			Current_state = DRINK_LIST;
 			break;
-			case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
-							List_Display();
+
+		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
+			List_Display();
 
 			Current_state = SHIT_LIST;
 			break;
+
 		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
 			List_Display();
 
 			Current_state = URINATE_LIST;
-			break;			
+			break;
+
 		case LACTATION_LIST:
 		case DRINK_LIST:
-			case SHIT_LIST:
-				case URINATE_LIST:
-					
-				
-				
-				
-				break;
-		
+		case SHIT_LIST:
+		case URINATE_LIST:
+
+
+
+
+			break;
+
 		default:
 			break;
 	}

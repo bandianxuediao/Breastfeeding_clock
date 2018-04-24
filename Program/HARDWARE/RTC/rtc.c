@@ -112,8 +112,8 @@ u8 Is_Leap_Year(u16 year)
 }
 //设置时钟
 //把输入的时钟转换为秒钟
-//以1970年1月1日为基准
-//1970~2099年为合法年份
+//以2018年1月1日为基准
+//2018~2099年为合法年份
 //返回值:0,成功;其他:错误代码.
 //月份数据表
 u8 const table_week[12] = {0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5}; //月修正数据表
@@ -125,9 +125,9 @@ u8 RTC_Set(u16 syear, u8 smon, u8 sday, u8 hour, u8 min, u8 sec)
 	u16 t;
 	u32 seccount = 0;
 
-	if(syear < 1970 || syear > 2099)return 1;
+	if(syear < 2018 || syear > 2099)return 1;
 
-	for(t = 1970; t < syear; t++) //把所有年份的秒钟相加
+	for(t = 2018; t < syear; t++) //把所有年份的秒钟相加
 	{
 		if(Is_Leap_Year(t))seccount += 31622400; //闰年的秒钟数
 		else seccount += 31536000;            //平年的秒钟数
@@ -156,8 +156,8 @@ u8 RTC_Set(u16 syear, u8 smon, u8 sday, u8 hour, u8 min, u8 sec)
 }
 
 //初始化闹钟
-//以1970年1月1日为基准
-//1970~2099年为合法年份
+//以2018年1月1日为基准
+//2018~2099年为合法年份
 //syear,smon,sday,hour,min,sec：闹钟的年月日时分秒
 //返回值:0,成功;其他:错误代码.
 u8 RTC_Alarm_Set(u16 syear, u8 smon, u8 sday, u8 hour, u8 min, u8 sec)
@@ -165,9 +165,9 @@ u8 RTC_Alarm_Set(u16 syear, u8 smon, u8 sday, u8 hour, u8 min, u8 sec)
 	u16 t;
 	u32 seccount = 0;
 
-	if(syear < 1970 || syear > 2099)return 1;
+	if(syear < 2018 || syear > 2099)return 1;
 
-	for(t = 1970; t < syear; t++) //把所有年份的秒钟相加
+	for(t = 2018; t < syear; t++) //把所有年份的秒钟相加
 	{
 		if(Is_Leap_Year(t))seccount += 31622400; //闰年的秒钟数
 		else seccount += 31536000;            //平年的秒钟数
@@ -198,6 +198,35 @@ u8 RTC_Alarm_Set(u16 syear, u8 smon, u8 sday, u8 hour, u8 min, u8 sec)
 	return 0;
 }
 
+u32 TimeTo_Sec(u16 syear, u8 smon, u8 sday, u8 hour, u8 min, u8 sec)
+{
+	u16 t;
+	u32 seccount = 0;
+
+	if(syear < 2018 || syear > 2099)return 1;
+
+	for(t = 2018; t < syear; t++) //把所有年份的秒钟相加
+	{
+		if(Is_Leap_Year(t))seccount += 31622400; //闰年的秒钟数
+		else seccount += 31536000;            //平年的秒钟数
+	}
+
+	smon -= 1;
+
+	for(t = 0; t < smon; t++) //把前面月份的秒钟数相加
+	{
+		seccount += (u32)mon_table[t] * 86400; //月份秒钟数相加
+
+		if(Is_Leap_Year(syear) && t == 1)seccount += 86400; //闰年2月份增加一天的秒钟数
+	}
+
+	seccount += (u32)(sday - 1) * 86400; //把前面日期的秒钟数相加
+	seccount += (u32)hour * 3600; //小时秒钟数
+	seccount += (u32)min * 60; //分钟秒钟数
+	seccount += sec; //最后的秒钟加上去
+	return seccount;//返回计算出来的秒数
+
+}
 
 //得到当前的时间
 //返回值:0,成功;其他:错误代码.
@@ -213,7 +242,7 @@ u8 RTC_Get(void)
 	if(daycnt != temp) //超过一天了
 	{
 		daycnt = temp;
-		temp1 = 1970; //从1970年开始
+		temp1 = 2018; //从2018年开始
 
 		while(temp >= 365)
 		{
