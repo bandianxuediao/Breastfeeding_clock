@@ -228,77 +228,43 @@ void TimeDiffer_Calc(u16 num, u16 base)
 	u8 read_temp[10];
 	u8 display_temp[30];
 	u8 month_date;
+	vs32 Current_timecount=0;
+	u32 Next_timecount=0;
 
 	if(num == 0)
 	{
-		sprintf((char*)display_temp, "共0条|无数据", num, 0);
+		sprintf((char*)display_temp, "共0条|无数据");
 
 	}
 	else
 	{
-
-
 		TurnPage_Calc = num;
-		AT24CXX_Read(((num - 1) * 6 + base), read_temp, 6);
-		TurnPage_Calc--;
+		AT24CXX_Read(((TurnPage_Calc--) * 6 + base), read_temp, 6);
+		
+		Next_timecount += read_temp[0];
+		Next_timecount += read_temp[1] << 8;
+		Next_timecount += read_temp[2] << 16;
+		Next_timecount += read_temp[3] << 24;
+	
+		Current_timecount = RTC_GetCounter();//获取当前秒计数		
+	
+		Current_timecount-=Next_timecount;
 
-
-
-		TimeDiffer.min = read_temp[4] - calendar.min;
-		TimeDiffer.hour = read_temp[3] - calendar.hour;
-		TimeDiffer.day = read_temp[2] - calendar.w_date;
-		TimeDiffer.month = read_temp[1] - calendar.w_month;
-		TimeDiffer.year = read_temp[0] - calendar.w_year;
-
-		if((read_temp[1] == 1) || (read_temp[1] == 3) || (read_temp[1] == 5) || (read_temp[1] == 7) || (read_temp[1] == 8) || (read_temp[1] == 10) || (read_temp[1] == 12))
+		if(Current_timecount < 0)
 		{
-			month_date = 31;
-		}
-		else if((read_temp[1] == 4) || (read_temp[1] == 6) || (read_temp[1] == 9))
-		{
-			month_date = 30;
-		}
-		else if(read_temp[1] == 2)
-		{
-			month_date = 28;
-		}
-
-		if(TimeDiffer.min < 0)
-		{
-			TimeDiffer.min += 60;
-			TimeDiffer.hour -= 1;
-		}
-
-		if(TimeDiffer.hour < 0)
-		{
-			TimeDiffer.hour += 24;
-			TimeDiffer.day -= 1;
-		}
-
-		if(TimeDiffer.day < 0)
-		{
-			TimeDiffer.day += month_date;
-		}
-
-		if(TimeDiffer.month < 0)
-		{
-			TimeDiffer.month += 12;
-			TimeDiffer.year -= 1;
-		}
-
-		if(TimeDiffer.year < 0)
-		{
-			sprintf((char*)display_temp, "共%d条|error", num, 0);
+			sprintf((char*)display_temp, "共%d条|error", num);
 		}
 		else
 		{
-			if(TimeDiffer.month == 0)
+			if(Current_timecount <=(10*24*60*60))//暂定10天超时
 			{
-				sprintf((char*)display_temp, "共%d条|%d.%d小时", num, TimeDiffer.day * 24 + TimeDiffer.hour, TimeDiffer.min * 10 / 60);
+				sprintf((char*)display_temp, "共%d条|%d.%d小时", num, Current_timecount/3600, Current_timecount/36000);
+				//刷新列表
 			}
 			else
 			{
-				sprintf((char*)display_temp, "共%d条|超时", num, 0);
+				sprintf((char*)display_temp, "共%d条|超时", num);
+				//刷新列表
 			}
 
 		}
@@ -363,6 +329,7 @@ void List_Display(void)
 			show_left_button("小便");//显示右功能
 			break;
 		}
+		default:
 		break;
 	}
 
