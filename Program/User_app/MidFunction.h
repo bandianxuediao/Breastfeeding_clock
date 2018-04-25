@@ -30,6 +30,12 @@ typedef struct
 extern Time_Struct TimeDiffer;
 extern Time_Struct Temp_Time;
 #define INITIAL_ADDR    5   //在第五字节位置存放是否第一次使用的标志
+
+#define INDEX_ADDR_LACTATION     10//显示项目状态--默认选中哺乳
+#define INDEX_ADDR_DRINK     20//显示项目状态--选中补水
+#define INDEX_ADDR_SHIT      30//显示项目状态--选中大便
+#define INDEX_ADDR_URINATE       40//显示项目状态--选中小便 
+
 #define BASE_ADDR_LACTATION     100//显示项目状态--默认选中哺乳
 #define BASE_ADDR_DRINK     300//显示项目状态--选中补水
 #define BASE_ADDR_SHIT      500//显示项目状态--选中大便
@@ -42,13 +48,14 @@ extern Time_Struct Temp_Time;
 
 extern SYS_STATE Current_state;
 extern SYS_STATE KEY_state;
+extern u16 TurnPage_Calc; //翻页操作计数
 
 extern void Storage_One_Data(u16 base);
 extern void PIN_Init(void);
 extern void pad_scan(void);
 //extern void find_card(void);
 //extern u8 compare_array(u8* array1, u8* array2);
-void TimeDiffer_Calc(u16 num, u16 base);
+void TimeDiffer_Calc(u16 base);
 void List_Display(void);
 
 extern u16 Current_index_read(u16 base);

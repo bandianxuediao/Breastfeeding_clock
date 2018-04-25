@@ -53,10 +53,10 @@ void KeyLeft_Program(void)
 			break;
 
 		case LACTATION_LIST:
-		Storage_One_Data(BASE_ADDR_LACTATION);
+			Storage_One_Data(BASE_ADDR_LACTATION);
 
-break;		
-		
+			break;
+
 		case DRINK_LIST:
 		case SHIT_LIST:
 		case URINATE_LIST:

@@ -294,15 +294,15 @@ u8 RTC_Get(void)
 u8 SecTo_Time(u8 *read_temp)
 {
 	static u16 daycnt = 0;
-	u32 timecount=0;
+	u32 timecount = 0;
 	u32 temp = 0;
 	u16 temp1 = 0;
-	
+
 	timecount += read_temp[0];
 	timecount += read_temp[1] << 8;
 	timecount += read_temp[2] << 16;
 	timecount += read_temp[3] << 24;
-	
+
 	temp = timecount / 86400; //得到天数(秒钟数对应的)
 
 	if(daycnt != temp) //超过一天了

@@ -30,6 +30,29 @@ void KeyUp_Program(void)
 
 		}
 
+		case LACTATION_LIST:
+			TurnPage_Calc += 3;
+			Renovate_List(BASE_ADDR_LACTATION, 0);
+
+			break;
+
+		case DRINK_LIST:
+			TurnPage_Calc += 3;
+			Renovate_List(BASE_ADDR_DRINK, 0);
+
+			break;
+
+		case SHIT_LIST:
+			TurnPage_Calc += 3;
+			Renovate_List(BASE_ADDR_SHIT, 0);
+
+			break;
+
+		case URINATE_LIST:
+			TurnPage_Calc += 3;
+			Renovate_List(BASE_ADDR_URINATE, 0);
+
+			break;
 
 		case WELCOME_WAIT:
 

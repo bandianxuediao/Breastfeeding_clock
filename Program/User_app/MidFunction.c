@@ -30,20 +30,20 @@ u16 Current_index_read(u16 base)
 	switch(base)
 	{
 		case BASE_ADDR_LACTATION:
-			EepIndex.lactation = AT24CXX_ReadLenByte(10, 2);
+			EepIndex.lactation = AT24CXX_ReadLenByte(INDEX_ADDR_LACTATION, 2);
 			return EepIndex.lactation;
 
 		case BASE_ADDR_DRINK:
 
-			EepIndex.drink = AT24CXX_ReadLenByte(20, 2);
+			EepIndex.drink = AT24CXX_ReadLenByte(INDEX_ADDR_DRINK, 2);
 			return EepIndex.drink;
 
 		case BASE_ADDR_SHIT:
-			EepIndex.shit = AT24CXX_ReadLenByte(30, 2);
+			EepIndex.shit = AT24CXX_ReadLenByte(INDEX_ADDR_SHIT, 2);
 			return EepIndex.shit;
 
 		case BASE_ADDR_URINATE:
-			EepIndex.urinate = AT24CXX_ReadLenByte(40, 2);
+			EepIndex.urinate = AT24CXX_ReadLenByte(INDEX_ADDR_URINATE, 2);
 
 			return EepIndex.urinate;
 
@@ -66,29 +66,29 @@ u16 Current_index_read(u16 base)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-u16 Current_index_write(u16 base,u16 num)
+u16 Current_index_write(u16 base, u16 num)
 {
 	switch(base)
 	{
 		case BASE_ADDR_LACTATION:
-			 AT24CXX_WriteLenByte(10, num,2);
-		EepIndex.lactation=num;
+			AT24CXX_WriteLenByte(INDEX_ADDR_LACTATION, num, 2);
+			EepIndex.lactation = num;
 			break;
 
 		case BASE_ADDR_DRINK:
 
-			AT24CXX_WriteLenByte(20, num,2);
-		EepIndex.drink=num;
+			AT24CXX_WriteLenByte(INDEX_ADDR_DRINK, num, 2);
+			EepIndex.drink = num;
 			break;
 
 		case BASE_ADDR_SHIT:
-			AT24CXX_WriteLenByte(30,num, 2);
-		EepIndex.shit=num;
+			AT24CXX_WriteLenByte(INDEX_ADDR_SHIT, num, 2);
+			EepIndex.shit = num;
 			break;
 
 		case BASE_ADDR_URINATE:
-			AT24CXX_WriteLenByte(40,num, 2);
-EepIndex.urinate=num;
+			AT24CXX_WriteLenByte(INDEX_ADDR_URINATE, num, 2);
+			EepIndex.urinate = num;
 			break;
 
 		default:
@@ -108,40 +108,120 @@ EepIndex.urinate=num;
 //|----------|--------------------------------------------------------------------------------------
 //| 函数设计 | 编写人：李亚东    时间：2018-04-24
 //|----------|--------------------------------------------------------------------------------------
-//|   备注   |direction 0,左键向上   1，右键向下  ,2  第一页
+//|   备注   |direction 0,向上   1，向下  ,2  第一页
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void Renovate_List(u16 base , u8 direction)
+void Renovate_List(u16 base, u8 direction)
 {
 	u8 read_temp[14];
-	u32 timecount=0;
+	u32 timecount = 0;
+
+	if(TurnPage_Calc >= Current_index_read(base))
+	{
+		TurnPage_Calc++;
+		return;
+	}
+
 	switch(base)
 	{
 		case BASE_ADDR_LACTATION:
-AT24CXX_Read((EepIndex.lactation-- * 6 + base), read_temp, 6);
+			if(direction == 1)
+			{
+				AT24CXX_Read((TurnPage_Calc * 6 + base), read_temp, 6);
+				SecTo_Time(read_temp);
+				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+				new_front_state = 0; //从半汉字开始输入
 
-			sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year-2000,Temp_Time.month,Temp_Time.day,Temp_Time.hour,Temp_Time.min);
-			new_front_state = 0; //从半汉字开始输入
-			oled_print(0, LINE1, &read_temp[0]);//字符输出
+				oled_print(0, LINE1, &read_temp[0]);//字符输出
+
+				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
+				{
+					return;
+				}
+
+				AT24CXX_Read((--TurnPage_Calc * 6 + base), read_temp, 6);
+				SecTo_Time(read_temp);
+				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+				new_front_state = 0; //从半汉字开始输入
+
+				oled_print(0, LINE2, &read_temp[0]);//字符输出
+
+				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
+				{
+					return;
+				}
+
+				AT24CXX_Read((--TurnPage_Calc * 6 + base), read_temp, 6);
+				SecTo_Time(read_temp);
+				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+				new_front_state = 0; //从半汉字开始输入
+
+				oled_print(0, LINE3, &read_temp[0]);//字符输出
+
+				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
+				{
+					return;
+				}
+			}
+
+			else if(direction == 0)
+			{
+				AT24CXX_Read((TurnPage_Calc * 6 + base), read_temp, 6);
+				SecTo_Time(read_temp);
+				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+				new_front_state = 0; //从半汉字开始输入
+
+				oled_print(0, LINE1, &read_temp[0]);//字符输出
+
+				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
+				{
+					return;
+				}
+
+				AT24CXX_Read((++TurnPage_Calc * 6 + base), read_temp, 6);
+				SecTo_Time(read_temp);
+				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+				new_front_state = 0; //从半汉字开始输入
+
+				oled_print(0, LINE2, &read_temp[0]);//字符输出
+
+				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
+				{
+					return;
+				}
+
+				AT24CXX_Read((++TurnPage_Calc * 6 + base), read_temp, 6);
+				SecTo_Time(read_temp);
+				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+				new_front_state = 0; //从半汉字开始输入
+
+				oled_print(0, LINE3, &read_temp[0]);//字符输出
+
+				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
+				{
+					return;
+				}
+			}
+
 			oled_updatescr(0, 64);     //屏幕刷新
 			break;
 
 		case BASE_ADDR_DRINK:
 
-//AT24CXX_Read((num * 6 + base), read_temp, 6);
-//		EepIndex.drink=num;
-//			break;
+		//AT24CXX_Read((num * 6 + base), read_temp, 6);
+		//      EepIndex.drink=num;
+		//          break;
 
-//		case BASE_ADDR_SHIT:
-//AT24CXX_Read((num * 6 + base), read_temp, 6);
-//		EepIndex.shit=num;
-//			break;
+		//      case BASE_ADDR_SHIT:
+		//AT24CXX_Read((num * 6 + base), read_temp, 6);
+		//      EepIndex.shit=num;
+		//          break;
 
-//		case BASE_ADDR_URINATE:
-//		AT24CXX_Read((num * 6 + base), read_temp, 6);
-//EepIndex.urinate=num;
-//			break;
+		//      case BASE_ADDR_URINATE:
+		//      AT24CXX_Read((num * 6 + base), read_temp, 6);
+		//EepIndex.urinate=num;
+		//          break;
 
 		default:
 			break;
@@ -187,13 +267,16 @@ void Storage_One_Data(u16 base)
 	timecount_crc += read_temp[1] << 8;
 	timecount_crc += read_temp[2] << 16;
 	timecount_crc += read_temp[3] << 24;
+	SecTo_Time(read_temp);
 
 	if(timecount_crc == timecount)//再次读出进行校验
 	{
 		//存储成功，刷新列表
 		num++;
-Current_index_write(base,num);//更新EEPROM中的索引信息
-		Renovate_List(base,1);
+		Current_index_write(base, num); //更新EEPROM中的索引信息
+		TurnPage_Calc = num - 1;
+		TimeDiffer_Calc(base);
+		//Renovate_List(base, 1);
 
 	}
 	else
@@ -221,13 +304,15 @@ Current_index_write(base,num);//更新EEPROM中的索引信息
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void TimeDiffer_Calc(u16 num, u16 base)
+void TimeDiffer_Calc(u16 base)
 {
 	u8 read_temp[10];
 	u8 display_temp[30];
 	u8 month_date;
-	vs32 Current_timecount=0;
-	u32 Next_timecount=0;
+	vs32 Current_timecount = 0;
+	u32 Next_timecount = 0;
+	u16 num = 0;
+	num = Current_index_read(base);
 
 	if(num == 0)
 	{
@@ -236,17 +321,17 @@ void TimeDiffer_Calc(u16 num, u16 base)
 	}
 	else
 	{
-		TurnPage_Calc = num;
-		AT24CXX_Read(((TurnPage_Calc) * 6 + base), read_temp, 6);
-		
+		TurnPage_Calc = num - 1;
+		AT24CXX_Read((TurnPage_Calc * 6 + base), read_temp, 6);
+
 		Next_timecount += read_temp[0];
 		Next_timecount += read_temp[1] << 8;
 		Next_timecount += read_temp[2] << 16;
 		Next_timecount += read_temp[3] << 24;
-	
-		Current_timecount = RTC_GetCounter();//获取当前秒计数		
-	
-		Current_timecount-=Next_timecount;
+		SecTo_Time(read_temp);
+		Current_timecount = RTC_GetCounter();//获取当前秒计数
+
+		Current_timecount -= Next_timecount;
 
 		if(Current_timecount < 0)
 		{
@@ -254,17 +339,17 @@ void TimeDiffer_Calc(u16 num, u16 base)
 		}
 		else
 		{
-			if(Current_timecount <=(10*24*60*60))//暂定10天超时
+			if(Current_timecount <= (10 * 24 * 60 * 60)) //暂定10天超时
 			{
-				sprintf((char*)display_temp, "共%d条|%d.%d小时", num, Current_timecount/3600, Current_timecount/36000);
+				sprintf((char*)display_temp, "共%d条|%d.%d小时", num, Current_timecount / 3600, Current_timecount / 360);
 				//刷新列表
-				
+				Renovate_List(BASE_ADDR_LACTATION, 1);
 			}
 			else
 			{
 				sprintf((char*)display_temp, "共%d条|超时", num);
 				//刷新列表
-
+				Renovate_List(BASE_ADDR_LACTATION, 1);
 			}
 
 		}
@@ -275,9 +360,9 @@ void TimeDiffer_Calc(u16 num, u16 base)
 }
 
 //==================================================================================================
-//| 函数名称 | Detect_Pin_State
+//| 函数名称 | List_Display
 //|----------|--------------------------------------------------------------------------------------
-//| 函数功能 | 按键检测功能函数
+//| 函数功能 | 列表显示
 //|----------|--------------------------------------------------------------------------------------
 //| 输入参数 |
 //|----------|--------------------------------------------------------------------------------------
@@ -300,8 +385,10 @@ void List_Display(void)
 	{
 		case DISPLAY_ITEM_LACTATION://显示项目状态--默认选中哺乳
 		{
-			Current_index_read(BASE_ADDR_LACTATION);//更新当前索引
-			TimeDiffer_Calc(EepIndex.lactation, BASE_ADDR_LACTATION);
+			TurnPage_Calc = Current_index_read(BASE_ADDR_LACTATION); //更新当前索引
+			TimeDiffer_Calc(BASE_ADDR_LACTATION);
+
+
 			show_left_button("哺乳");//显示右功能
 			break;
 		}
@@ -309,7 +396,7 @@ void List_Display(void)
 		case DISPLAY_ITEM_DRINK://显示项目状态--选中补水
 		{
 			Current_index_read(BASE_ADDR_DRINK);//更新当前索引
-			TimeDiffer_Calc(EepIndex.drink, BASE_ADDR_DRINK);
+			TimeDiffer_Calc(BASE_ADDR_DRINK);
 			show_left_button("补水");//显示右功能
 			break;
 		}
@@ -317,7 +404,7 @@ void List_Display(void)
 		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
 		{
 			Current_index_read(BASE_ADDR_SHIT);//更新当前索引
-			TimeDiffer_Calc(EepIndex.shit, BASE_ADDR_SHIT);
+			TimeDiffer_Calc( BASE_ADDR_SHIT);
 			show_left_button("大便");//显示右功能
 			break;
 		}
@@ -325,12 +412,13 @@ void List_Display(void)
 		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
 		{
 			Current_index_read(BASE_ADDR_URINATE);//更新当前索引
-			TimeDiffer_Calc(EepIndex.urinate, BASE_ADDR_URINATE);
+			TimeDiffer_Calc(BASE_ADDR_URINATE);
 			show_left_button("小便");//显示右功能
 			break;
 		}
+
 		default:
-		break;
+			break;
 	}
 
 

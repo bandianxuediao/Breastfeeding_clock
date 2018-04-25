@@ -31,6 +31,30 @@ void KeyDown_Program(void)
 
 		}
 
+		case LACTATION_LIST:
+			TurnPage_Calc--;
+			Renovate_List(BASE_ADDR_LACTATION, 1);
+
+			break;
+
+		case DRINK_LIST:
+			TurnPage_Calc--;
+			Renovate_List(BASE_ADDR_DRINK, 1);
+
+			break;
+
+		case SHIT_LIST:
+			TurnPage_Calc--;
+			Renovate_List(BASE_ADDR_SHIT, 1);
+
+			break;
+
+		case URINATE_LIST:
+			TurnPage_Calc--;
+			Renovate_List(BASE_ADDR_URINATE, 1);
+
+			break;
+
 		case WELCOME_WAIT:
 
 			break;
