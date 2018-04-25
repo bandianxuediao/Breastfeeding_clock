@@ -108,7 +108,7 @@ EepIndex.urinate=num;
 //|----------|--------------------------------------------------------------------------------------
 //| 函数设计 | 编写人：李亚东    时间：2018-04-24
 //|----------|--------------------------------------------------------------------------------------
-//|   备注   |direction 0,左键向上   1，右键向下
+//|   备注   |direction 0,左键向上   1，右键向下  ,2  第一页
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
@@ -120,8 +120,6 @@ void Renovate_List(u16 base , u8 direction)
 	{
 		case BASE_ADDR_LACTATION:
 AT24CXX_Read((EepIndex.lactation-- * 6 + base), read_temp, 6);
-		
-		SecTo_Time(read_temp);
 
 			sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year-2000,Temp_Time.month,Temp_Time.day,Temp_Time.hour,Temp_Time.min);
 			new_front_state = 0; //从半汉字开始输入
@@ -239,7 +237,7 @@ void TimeDiffer_Calc(u16 num, u16 base)
 	else
 	{
 		TurnPage_Calc = num;
-		AT24CXX_Read(((TurnPage_Calc--) * 6 + base), read_temp, 6);
+		AT24CXX_Read(((TurnPage_Calc) * 6 + base), read_temp, 6);
 		
 		Next_timecount += read_temp[0];
 		Next_timecount += read_temp[1] << 8;
@@ -260,11 +258,13 @@ void TimeDiffer_Calc(u16 num, u16 base)
 			{
 				sprintf((char*)display_temp, "共%d条|%d.%d小时", num, Current_timecount/3600, Current_timecount/36000);
 				//刷新列表
+				
 			}
 			else
 			{
 				sprintf((char*)display_temp, "共%d条|超时", num);
 				//刷新列表
+
 			}
 
 		}
