@@ -4,7 +4,7 @@ SYS_STATE Current_state;
 SYS_STATE KEY_state;
 int main(void)
 {
-
+	u8 read_temp1[6];
 	//  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x20000); //与配置文件相对应  配置程序的起始地址，前面一部分留给了bootload
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 
@@ -24,6 +24,9 @@ int main(void)
 	ShowWelcome();
 	delay_ms(600);
 	Current_state = WELCOME_WAIT;
+
+
+
 	//  Back_Light(0);
 	//RTC_Set(2018, 4, 24, 23, 26, 30); //设置时间
 	//          AT24CXX_WriteLenByte(10, 0,2);

@@ -37,9 +37,9 @@ extern Time_Struct Temp_Time;
 #define INDEX_ADDR_URINATE       40//显示项目状态--选中小便 
 
 #define BASE_ADDR_LACTATION     100//显示项目状态--默认选中哺乳
-#define BASE_ADDR_DRINK     300//显示项目状态--选中补水
-#define BASE_ADDR_SHIT      500//显示项目状态--选中大便
-#define BASE_ADDR_URINATE       700//显示项目状态--选中小便 
+#define BASE_ADDR_DRINK     30100//显示项目状态--选中补水
+#define BASE_ADDR_SHIT      60100//显示项目状态--选中大便
+#define BASE_ADDR_URINATE       90100//显示项目状态--选中小便 
 
 //#define Back_Light_1  GPIO_SetBits(GPIOA, GPIO_Pin_15)
 //#define   Back_Light_0    GPIO_ResetBits(GPIOA, GPIO_Pin_15)
@@ -48,7 +48,7 @@ extern Time_Struct Temp_Time;
 
 extern SYS_STATE Current_state;
 extern SYS_STATE KEY_state;
-extern u16 TurnPage_Calc; //翻页操作计数
+extern u32 TurnPage_Calc; //翻页操作计数
 
 extern void Storage_One_Data(u16 base);
 extern void PIN_Init(void);

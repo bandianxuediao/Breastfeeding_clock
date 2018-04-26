@@ -12,22 +12,26 @@ void AT24CXX_Init(void)
 //在AT24CXX指定地址读出一个数据
 //ReadAddr:开始读数的地址
 //返回值  :读到的数据
-u8 AT24CXX_ReadOneByte(u16 ReadAddr)
+u8 AT24CXX_ReadOneByte(u32 ReadAddr)
 {
 	u8 temp = 0;
+	u8 AddrP0 = 0;
+	AddrP0 = ReadAddr >> 16;
 	EE_IIC_Start();
 
-	if(EE_TYPE > AT24C16)
+	if(AddrP0 == 0)
 	{
 		EE_IIC_Send_Byte(0XA0);    //发送写命令
-		EE_IIC_Wait_Ack();
-		EE_IIC_Send_Byte(ReadAddr / 256); //发送高地址
-		EE_IIC_Wait_Ack();
 	}
-	else EE_IIC_Send_Byte(0XA0 + ((ReadAddr / 256) << 1)); //发送器件地址0XA0,写数据
+	else
+	{
+		EE_IIC_Send_Byte(0XA0 | 0x02); //发送写命令 和P0位
+	}
 
-	//  IIC_Wait_Ack();
-	EE_IIC_Send_Byte(ReadAddr % 256); //发送低地址
+	EE_IIC_Wait_Ack();
+	EE_IIC_Send_Byte((ReadAddr >> 8) & 0xff); //发送高地址
+	EE_IIC_Wait_Ack();
+	EE_IIC_Send_Byte(ReadAddr & 0xff); //发送低地址
 	EE_IIC_Wait_Ack();
 	EE_IIC_Start();
 	EE_IIC_Send_Byte(0XA1);           //进入接收模式
@@ -39,23 +43,25 @@ u8 AT24CXX_ReadOneByte(u16 ReadAddr)
 //在AT24CXX指定地址写入一个数据
 //WriteAddr  :写入数据的目的地址
 //DataToWrite:要写入的数据
-void AT24CXX_WriteOneByte(u16 WriteAddr, u8 DataToWrite)
+void AT24CXX_WriteOneByte(u32 WriteAddr, u8 DataToWrite)
 {
+	u8 AddrP0 = 0;
+	AddrP0 = WriteAddr >> 16;
 	EE_IIC_Start();
 
-	if(EE_TYPE > AT24C16)
+	if(AddrP0 == 0)
 	{
-		EE_IIC_Send_Byte(0XA0);     //发送写命令
-		EE_IIC_Wait_Ack();
-		EE_IIC_Send_Byte(WriteAddr >> 8); //发送高地址
+		EE_IIC_Send_Byte(0XA0);    //发送写命令
 	}
 	else
 	{
-		EE_IIC_Send_Byte(0XA0 + ((WriteAddr / 256) << 1)); //发送器件地址0XA0,写数据
+		EE_IIC_Send_Byte(0XA0 | 0x02); //发送写命令 和P0位
 	}
 
 	EE_IIC_Wait_Ack();
-	EE_IIC_Send_Byte(WriteAddr % 256); //发送低地址
+	EE_IIC_Send_Byte((WriteAddr >> 8) & 0xff); //发送高地址
+	EE_IIC_Wait_Ack();
+	EE_IIC_Send_Byte(WriteAddr & 0xff); //发送低地址
 	EE_IIC_Wait_Ack();
 	EE_IIC_Send_Byte(DataToWrite);     //发送字节
 	EE_IIC_Wait_Ack();
@@ -67,7 +73,7 @@ void AT24CXX_WriteOneByte(u16 WriteAddr, u8 DataToWrite)
 //WriteAddr  :开始写入的地址
 //DataToWrite:数据数组首地址
 //Len        :要写入数据的长度2,4
-void AT24CXX_WriteLenByte(u16 WriteAddr, u32 DataToWrite, u8 Len)
+void AT24CXX_WriteLenByte(u32 WriteAddr, u32 DataToWrite, u8 Len)
 {
 	u8 t;
 
@@ -75,115 +81,6 @@ void AT24CXX_WriteLenByte(u16 WriteAddr, u32 DataToWrite, u8 Len)
 	{
 		AT24CXX_WriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
 	}
-}
-
-//在数据索引区查找卡号(100-2100字节)
-//索引里面存入的是两字节卡号[9][12]
-//如果找到了就返回箱子号
-//如果没找到就返回0
-/*  注：不需要清除卡号缓存 RC531_sbuf   */
-u8 FindCard_FormIndex(void)
-{
-	u8 i;
-	u8 pBuffer[2];
-	//  for(i=0;i<200;i++)
-	//  {
-	//      AT24CXX_Read(i*10+101,pBuffer,2);
-	//      if((pBuffer[0] == RC531_sbuf[9])&&(pBuffer[1] == RC531_sbuf[12]))
-	//      {return AT24CXX_ReadOneByte(i*10+100);} //找到相应的卡号，返回箱号
-	//  }
-	return 0;   //索引区已经读完，没找到卡号
-}
-//在数据索引区查找箱号
-
-
-u8 FindBox_FromIndex(u8 temp)
-{
-	//  u8 pBuffer[5];
-	//  AT24CXX_Read((temp-1)*10+100,pBuffer,5);
-	//  if((pBuffer[0] !=0)&(pBuffer[0] !=0xff))
-	//  {
-	//      if(pBuffer[0] == temp)//箱号相等
-	//      {
-	//          if((pBuffer[1] == 0)|(pBuffer[1] == 0xFF))//卡号部分为空,继续进行
-	//          {
-	//              Password[0] = pBuffer[3];
-	//              Password[1] = pBuffer[4];
-	//              return 2;//箱号相等，不存在卡号，返回密码
-	//          }
-	//          return 1;//存在卡号，是刷卡存包的
-	//      }
-	//      return 0;//箱号不相等
-	//  }
-	return 3;//此箱号为空
-}
-
-
-
-//在数据区查找卡号(100-2100字节)
-//索引里面存入的是四字节卡号[9][10][11][12]
-//如果匹配卡号成功且密码标志位为0x11（有密码）保存密码并返回0x01，没有密码则返回0x02
-//ID错误返回3
-//箱号错误返回 4
-//u8 Compare_Card(u8 box_num)
-//{
-//  u8 pBuffer[8];
-//  AT24CXX_Read((box_num-1)*10+2500,pBuffer, 8);
-//  if(pBuffer[0] == box_num)
-//  {
-//      if((pBuffer[1] == RC531_sbuf[9])&&(pBuffer[2] == RC531_sbuf[10])&&(pBuffer[3] == RC531_sbuf[11])&&(pBuffer[4] == RC531_sbuf[12]))
-//      {
-//          if(pBuffer[7] == 0x11) //有密码
-//          {
-//              Password[0] = pBuffer[5];
-//              Password[1] = pBuffer[6];
-//              return 0x01;
-//          }
-//          if(pBuffer[7] != 0x11) //没有密码
-//          {
-//              Password[0] = 0;
-//              Password[1] = 0;
-//              return 0x02;
-//          }
-//      }
-//      return 3; // ID校验失败
-//  }
-//  //  return 4;   //箱号校验失败
-//}
-
-//刷卡操作
-//将卡的信息存入索引，以及数据存储区
-//用到的数据包括：CARD_ID , USER_BOX_NUM  , IF_PASSWORD ， PASSWORD
-//传过来的数据是 ：USER_BOX_NUM , IF_PASSWORD，其他参数使用全局变量
-//数据存储完毕将 CARD_ID , USER_BOX_NUM , IF_PASSWORD , PASSWORD 清零
-void SAVE_INFORMATION_CARD(void)
-{
-	//  if(INPUT_PASS_STATE == 2)
-	//  {
-	//      AT24CXX_Write(((USER_BOX_NUM-1)*10+100),CARD_ID_INF,5);//在索引区写入箱号和CARD_ID
-	//      AT24CXX_Write(((USER_BOX_NUM-1)*10+2500),USER_CARD_ID,8);//在数据区写入箱号和CARD_ID，密码
-	//  }
-	//  if(INPUT_PASS_STATE == 5)
-	//  {
-	//      AT24CXX_Write(((USER_BOX_NUM-1)*10+100),CARD_ID_INF,5);//在索引区写入箱号和CARD_ID
-	////        AT24CXX_Write(((USER_BOX_NUM-1)*10+2500),USER_CARD_ID,8);//在数据区写入箱号和CARD_ID，密码
-	//  }
-}
-
-//已经取包，将数据区清除，写入0xFF
-void CLEAR_BOX(void)
-{
-	//  if(INPUT_PASS_STATE == 2)
-	//  {
-	//      AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+100),0xFF,10);
-	//      AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+2500),0xFF,10);
-	//      USER_BOX_NUM = 0;
-	//  }
-	//  if(INPUT_PASS_STATE == 5)
-	//  {
-	//      AT24CXX_WriteLenByte(((USER_BOX_NUM-1)*10+100),0xFF,10);
-	//      USER_BOX_NUM = 0;
-	//  }
 }
 
 //根据产生的随机数（BOX_NUM）来判断相应的索引区以及数据区是否有数据
@@ -221,7 +118,7 @@ void CLEAR_EEPROM(void)
 //ReadAddr   :开始读出的地址
 //返回值     :数据
 //Len        :要读出数据的长度2,4
-u32 AT24CXX_ReadLenByte(u16 ReadAddr, u8 Len)
+u32 AT24CXX_ReadLenByte(u32 ReadAddr, u8 Len)
 {
 	u8 t;
 	u32 temp = 0;
@@ -260,7 +157,7 @@ u8 AT24CXX_Check(void)
 //ReadAddr :开始读出的地址 对24c02为0~255
 //pBuffer  :数据数组首地址
 //NumToRead:要读出数据的个数
-void AT24CXX_Read(u16 ReadAddr, u8 *pBuffer, u16 NumToRead)
+void AT24CXX_Read(u32 ReadAddr, u8 *pBuffer, u16 NumToRead)
 {
 	while(NumToRead)
 	{
@@ -272,7 +169,7 @@ void AT24CXX_Read(u16 ReadAddr, u8 *pBuffer, u16 NumToRead)
 //WriteAddr :开始写入的地址 对24c02为0~255
 //pBuffer   :数据数组首地址
 //NumToWrite:要写入数据的个数
-void AT24CXX_Write(u16 WriteAddr, u8 *pBuffer, u16 NumToWrite)
+void AT24CXX_Write(u32 WriteAddr, u8 *pBuffer, u16 NumToWrite)
 {
 	while(NumToWrite--)
 	{
