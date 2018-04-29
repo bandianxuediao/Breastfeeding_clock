@@ -29,10 +29,10 @@ int main(void)
 
 	//  Back_Light(0);
 	//RTC_Set(2018, 4, 24, 23, 26, 30); //设置时间
-          AT24CXX_WriteLenByte(10, 0,2);
-          AT24CXX_WriteLenByte(20, 0,2);
-          AT24CXX_WriteLenByte(30,0, 2);
-          AT24CXX_WriteLenByte(40,0, 2);
+//          AT24CXX_WriteLenByte(10, 0,2);
+//          AT24CXX_WriteLenByte(20, 0,2);
+//          AT24CXX_WriteLenByte(30,0, 2);
+//          AT24CXX_WriteLenByte(40,0, 2);
 
 	oled_updatescr(0, 64);//屏幕刷新
 
