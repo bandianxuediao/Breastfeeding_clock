@@ -13,7 +13,7 @@ typedef struct
 	u32 delay1_cnt;
 	u32 delay2_cnt;
 	u32 delay3_cnt;
-	u32 delay4_cnt;	
+	u32 delay4_cnt;
 } DELAY_DATA;
 
 extern void SysTickInit(void);

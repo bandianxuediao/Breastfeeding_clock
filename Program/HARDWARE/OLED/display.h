@@ -27,7 +27,7 @@
 //12864可以显示12X12大小的汉字五行
 #define  LINE0           0        //12864第一行的起始位置
 #define  LINE1           13       //12864第二行的起始位置 
-#define  LINE2               26       //12864第三行的起始位置
+#define  LINE2           26       //12864第三行的起始位置
 #define  LINE3           39       //12864第四行的起始位置
 #define  LINE4           52       //12864第五行的起始位置
 #define  LINE_MARGIN     1        //行与行之间间隔的像素数

@@ -32,14 +32,20 @@ void KeyDown_Program(void)
 		}
 
 		case LACTATION_LIST:
-			TurnPage_Calc--;
-			Renovate_List(BASE_ADDR_LACTATION, 1);
+			if((TurnPage_Calc - 1) > 0)
+			{
+				TurnPage_Calc--;
+				Renovate_List(BASE_ADDR_LACTATION, 1);
+			}
 
 			break;
 
 		case DRINK_LIST:
-			TurnPage_Calc--;
-			Renovate_List(BASE_ADDR_DRINK, 1);
+			if((TurnPage_Calc - 1) > 0)
+			{
+				TurnPage_Calc--;
+				Renovate_List(BASE_ADDR_DRINK, 1);
+			}
 
 			break;
 

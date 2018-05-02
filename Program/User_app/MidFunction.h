@@ -50,6 +50,7 @@ extern SYS_STATE Current_state;
 extern SYS_STATE KEY_state;
 extern u32 TurnPage_Calc; //·­Ò³²Ù×÷¼ÆÊý
 
+void Renovate_List(u16 base, u8 direction);
 extern void Storage_One_Data(u16 base);
 extern void PIN_Init(void);
 extern void pad_scan(void);

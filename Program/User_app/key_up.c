@@ -31,7 +31,10 @@ void KeyUp_Program(void)
 		}
 
 		case LACTATION_LIST:
-			TurnPage_Calc += 3;
+
+			if((TurnPage_Calc + 1) < EepIndex.lactation)
+				TurnPage_Calc += 1;
+
 			Renovate_List(BASE_ADDR_LACTATION, 0);
 
 			break;

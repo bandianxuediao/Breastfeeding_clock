@@ -307,8 +307,8 @@ void TimingDelayDecrement(void)
 	{
 		DelayData.delay3_cnt--;
 	}
-	
-		if(DelayData.delay4_cnt != 0)
+
+	if(DelayData.delay4_cnt != 0)
 	{
 		DelayData.delay4_cnt--;
 	}

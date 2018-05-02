@@ -10,6 +10,8 @@ EEP_index EepIndex;
 Time_Struct TimeDiffer;
 Time_Struct Temp_Time;
 u32 TurnPage_Calc = 0; //翻页操作计数
+u32 Diff_timecount = 0;
+u16 Total_List = 0;
 //==================================================================================================
 //| 函数名称 | Current_index_read
 //|----------|--------------------------------------------------------------------------------------
@@ -114,120 +116,68 @@ u16 Current_index_write(u16 base, u16 num)
 //==================================================================================================
 void Renovate_List(u16 base, u8 direction)
 {
-	u8 read_temp[14];
+	u8 read_temp[17];
 	u32 timecount = 0;
+	u8 i = 0;
+	u8 display_temp[16];
 
-	if(TurnPage_Calc >= Current_index_read(base))
+	//  if(TurnPage_Calc >= Current_index_read(base))
+	//  {
+	//      TurnPage_Calc++;
+	//      return;
+	//  }
+	if((TurnPage_Calc >= 3) && ((Total_List - TurnPage_Calc) >= 1))
 	{
-		TurnPage_Calc++;
-		return;
+		clr_disp_mem();         //清除显存数据
+
+		sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, Diff_timecount / 360);
+		oled_print(0, LINE0, &display_temp[0]);//字符输出
+
+		switch(base)
+		{
+			case BASE_ADDR_LACTATION:
+				for(i = 0; i < 3; i++)
+				{
+
+					AT24CXX_Read(((TurnPage_Calc - i) * 6 + base), read_temp, 6);
+					SecTo_Time(read_temp);
+					sprintf((char*)read_temp, "%d,%02d%02d%02d %02d:%02d", Total_List - (TurnPage_Calc - i), Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+
+
+					new_front_state = 0; //从半汉字开始输入
+
+					oled_print(0, (i + 1) * 13, &read_temp[0]); //字符输出
+
+				}
+
+
+				show_left_button("哺乳"); //显示左功能
+				break;
+
+			case BASE_ADDR_DRINK:
+
+			//AT24CXX_Read((num * 6 + base), read_temp, 6);
+			//      EepIndex.drink=num;
+			//          break;
+
+			//      case BASE_ADDR_SHIT:
+			//AT24CXX_Read((num * 6 + base), read_temp, 6);
+			//      EepIndex.shit=num;
+			//          break;
+
+			//      case BASE_ADDR_URINATE:
+			//      AT24CXX_Read((num * 6 + base), read_temp, 6);
+			//EepIndex.urinate=num;
+			//          break;
+
+			default:
+				break;
+		}
 	}
 
-	switch(base)
-	{
-		case BASE_ADDR_LACTATION:
-			if(direction == 1)
-			{
-				AT24CXX_Read((TurnPage_Calc * 6 + base), read_temp, 6);
-				SecTo_Time(read_temp);
-				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
-				new_front_state = 0; //从半汉字开始输入
+	show_right_button("菜单");//显示右功能
 
-				oled_print(0, LINE1, &read_temp[0]);//字符输出
-
-				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
-				{
-					return;
-				}
-
-				AT24CXX_Read((--TurnPage_Calc * 6 + base), read_temp, 6);
-				SecTo_Time(read_temp);
-				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
-				new_front_state = 0; //从半汉字开始输入
-
-				oled_print(0, LINE2, &read_temp[0]);//字符输出
-
-				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
-				{
-					return;
-				}
-
-				AT24CXX_Read((--TurnPage_Calc * 6 + base), read_temp, 6);
-				SecTo_Time(read_temp);
-				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
-				new_front_state = 0; //从半汉字开始输入
-
-				oled_print(0, LINE3, &read_temp[0]);//字符输出
-
-				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
-				{
-					return;
-				}
-			}
-
-			else if(direction == 0)
-			{
-				AT24CXX_Read((TurnPage_Calc * 6 + base), read_temp, 6);
-				SecTo_Time(read_temp);
-				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
-				new_front_state = 0; //从半汉字开始输入
-
-				oled_print(0, LINE1, &read_temp[0]);//字符输出
-
-				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
-				{
-					return;
-				}
-
-				AT24CXX_Read((++TurnPage_Calc * 6 + base), read_temp, 6);
-				SecTo_Time(read_temp);
-				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
-				new_front_state = 0; //从半汉字开始输入
-
-				oled_print(0, LINE2, &read_temp[0]);//字符输出
-
-				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
-				{
-					return;
-				}
-
-				AT24CXX_Read((++TurnPage_Calc * 6 + base), read_temp, 6);
-				SecTo_Time(read_temp);
-				sprintf((char*)read_temp, "20%02d%02d%02d %02d:%02d", Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
-				new_front_state = 0; //从半汉字开始输入
-
-				oled_print(0, LINE3, &read_temp[0]);//字符输出
-
-				if((TurnPage_Calc == 0) || (TurnPage_Calc >= Current_index_read(base)))
-				{
-					return;
-				}
-			}
-
-			oled_updatescr(0, 64);     //屏幕刷新
-			break;
-
-		case BASE_ADDR_DRINK:
-
-		//AT24CXX_Read((num * 6 + base), read_temp, 6);
-		//      EepIndex.drink=num;
-		//          break;
-
-		//      case BASE_ADDR_SHIT:
-		//AT24CXX_Read((num * 6 + base), read_temp, 6);
-		//      EepIndex.shit=num;
-		//          break;
-
-		//      case BASE_ADDR_URINATE:
-		//      AT24CXX_Read((num * 6 + base), read_temp, 6);
-		//EepIndex.urinate=num;
-		//          break;
-
-		default:
-			break;
-	}
-
-
+	oled_updatescr(0, 64);     //屏幕刷新
 }
 
 //==================================================================================================
@@ -307,7 +257,7 @@ void Storage_One_Data(u16 base)
 void TimeDiffer_Calc(u16 base)
 {
 	u8 read_temp[10];
-	u8 display_temp[30];
+	u8 display_temp[16];
 	u8 month_date;
 	vs32 Current_timecount = 0;
 	u32 Next_timecount = 0;
@@ -322,6 +272,7 @@ void TimeDiffer_Calc(u16 base)
 	else
 	{
 		TurnPage_Calc = num - 1;
+		Total_List = num - 1;
 		AT24CXX_Read((TurnPage_Calc * 6 + base), read_temp, 6);
 
 		Next_timecount += read_temp[0];
@@ -332,6 +283,7 @@ void TimeDiffer_Calc(u16 base)
 		Current_timecount = RTC_GetCounter();//获取当前秒计数
 
 		Current_timecount -= Next_timecount;
+		Diff_timecount = Current_timecount;
 
 		if(Current_timecount < 0)
 		{
@@ -341,7 +293,7 @@ void TimeDiffer_Calc(u16 base)
 		{
 			if(Current_timecount <= (10 * 24 * 60 * 60)) //暂定10天超时
 			{
-				sprintf((char*)display_temp, "共%d条|%d.%d小时", num, Current_timecount / 3600, Current_timecount / 360);
+				sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, Diff_timecount / 360);
 				//刷新列表
 				Renovate_List(BASE_ADDR_LACTATION, 1);
 			}
