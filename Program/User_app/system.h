@@ -16,6 +16,8 @@ typedef enum
 	DISPLAY_ITEM_SHIT,//显示项目状态--选中大便
 	DISPLAY_ITEM_URINATE,//显示项目状态--选中小便
 
+	DISPLAY_MENU_TIME,
+
 	LACTATION_LIST,//显示哺乳时间列表状态
 	DRINK_LIST,//显示补水列表状态
 	MODIFY_DRINK,//修改补水量状态

@@ -126,11 +126,11 @@ void Renovate_List(u16 base, u8 direction)
 	//      TurnPage_Calc++;
 	//      return;
 	//  }
-	if((TurnPage_Calc >= 3) && ((Total_List - TurnPage_Calc) >= 1))
+	if((TurnPage_Calc >= 3) && ((Total_List - TurnPage_Calc) >= 0))
 	{
 		clr_disp_mem();         //清除显存数据
 
-		sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, Diff_timecount / 360);
+		sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, (Diff_timecount / 360) % 10);
 		oled_print(0, LINE0, &display_temp[0]);//字符输出
 
 		switch(base)
@@ -141,12 +141,12 @@ void Renovate_List(u16 base, u8 direction)
 
 					AT24CXX_Read(((TurnPage_Calc - i) * 6 + base), read_temp, 6);
 					SecTo_Time(read_temp);
-					sprintf((char*)read_temp, "%d,%02d%02d%02d %02d:%02d", Total_List - (TurnPage_Calc - i), Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+					sprintf((char*)read_temp, "%d_%02d%02d%02d %02d:%02d", Total_List + 1 - (TurnPage_Calc - i), Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
 
 
 					new_front_state = 0; //从半汉字开始输入
 
-					oled_print(0, (i + 1) * 13, &read_temp[0]); //字符输出
+					oled_print(0, (i + 1) * 13 - 2, &read_temp[0]); //字符输出
 
 				}
 
@@ -175,7 +175,7 @@ void Renovate_List(u16 base, u8 direction)
 		}
 	}
 
-	show_right_button("菜单");//显示右功能
+	show_right_button("返回");//显示右功能
 
 	oled_updatescr(0, 64);     //屏幕刷新
 }
@@ -293,7 +293,7 @@ void TimeDiffer_Calc(u16 base)
 		{
 			if(Current_timecount <= (10 * 24 * 60 * 60)) //暂定10天超时
 			{
-				sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, Diff_timecount / 360);
+				sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, (Diff_timecount / 360) % 10);
 				//刷新列表
 				Renovate_List(BASE_ADDR_LACTATION, 1);
 			}

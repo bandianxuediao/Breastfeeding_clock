@@ -49,6 +49,9 @@ extern Time_Struct Temp_Time;
 extern SYS_STATE Current_state;
 extern SYS_STATE KEY_state;
 extern u32 TurnPage_Calc; //·­Ò³²Ù×÷¼ÆÊý
+extern u32 Diff_timecount;
+extern u16 Total_List;
+
 
 void Renovate_List(u16 base, u8 direction);
 extern void Storage_One_Data(u16 base);

@@ -29,6 +29,7 @@ void KeyUp_Program(void)
 			Display_Items(Items_state); //默认为选中Lactation
 
 		}
+		break;
 
 		case LACTATION_LIST:
 

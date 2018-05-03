@@ -53,7 +53,10 @@ void KeyLeft_Program(void)
 			break;
 
 		case LACTATION_LIST:
-			Storage_One_Data(BASE_ADDR_LACTATION);
+			if(Diff_timecount >= 3600)
+			{
+				Storage_One_Data(BASE_ADDR_LACTATION);
+			}
 
 			break;
 

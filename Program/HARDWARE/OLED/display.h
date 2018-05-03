@@ -104,7 +104,7 @@ extern INPUT_DATA input_data;
 
 extern void Show_Time(void);
 extern void Display_Items(u8 state);
-
+extern void Display_Menu(u8 state);
 
 extern void AddCurrentInputData(u8* inputdata, u8 length, u8 show_type);
 extern ErrorStatus DeleteCurrentInputData(u8 length, u8 show_type);

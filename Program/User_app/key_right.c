@@ -24,10 +24,18 @@ void KeyRight_Program(void)
 		case DISPLAY_ITEM_DRINK://显示项目状态--选中补水
 		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
 		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
-
+		case DISPLAY_MENU_TIME:
 			ShowWelcome();
 			Current_state = WELCOME_WAIT;
 			break;
+
+		case WELCOME_WAIT:
+			Display_Menu(1);
+			Current_state = DISPLAY_MENU_TIME;
+			break;
+
+
+
 
 		case LACTATION_LIST:
 			Display_Items(1);   //默认为选中Lactation
@@ -49,8 +57,7 @@ void KeyRight_Program(void)
 			Current_state = DISPLAY_ITEM_URINATE; //当前状态置为项目显示
 			break;
 
-		case WELCOME_WAIT:
-			break;
+
 
 		default:
 			break;
