@@ -402,6 +402,8 @@ void Detect_Pin_State(void)
 
 		if(KEY_UP)
 		{
+			Back_Light(1);//背光电源输出5V
+			SetLightTimer(120000);//设置背光亮起时间2分钟
 			KeyUp_Program();
 			return;
 		}
@@ -413,6 +415,8 @@ void Detect_Pin_State(void)
 
 		if(KEY_DOWN)
 		{
+			Back_Light(1);//背光电源输出5V
+			SetLightTimer(120000);//设置背光亮起时间2分钟
 			KeyDown_Program();
 			return;
 		}
@@ -424,6 +428,8 @@ void Detect_Pin_State(void)
 
 		if(KEY_LEFT)
 		{
+			Back_Light(1);//背光电源输出5V
+			SetLightTimer(120000);//设置背光亮起时间2分钟
 			KeyLeft_Program();
 			return;
 		}
@@ -435,9 +441,18 @@ void Detect_Pin_State(void)
 
 		if(KEY_RIGHT)
 		{
+			Back_Light(1);//背光电源输出5V
+			SetLightTimer(120000);//设置背光亮起时间2分钟
 			KeyRight_Program();
 			return;
 		}
+	}
+
+	if(INFRARED)
+	{
+		Back_Light(1);//背光电源输出5V
+		SetLightTimer(120000);//设置背光亮起时间2分钟
+		return;
 	}
 }
 

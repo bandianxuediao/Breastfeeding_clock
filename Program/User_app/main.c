@@ -23,6 +23,8 @@ int main(void)
 	RTC_Init();
 	ShowWelcome();
 	delay_ms(600);
+	Back_Light(1);//开机背光电源输出5V
+	SetLightTimer(120000);//设置背光亮起时间2分钟
 	Current_state = WELCOME_WAIT;
 
 
@@ -39,6 +41,11 @@ int main(void)
 	while(1)
 	{
 		Detect_Pin_State();
+
+		if(GetLightTimerState() == TIME_OUT)
+		{
+			Back_Light(0);//背光电源关闭输出5V
+		}
 
 		//      if(max_waite==10000)
 		//      {   lcdreset();                    //初始化LCD屏

@@ -6,7 +6,7 @@
 
 #define INFRARED    (GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_12))?0:1 //
 #define KEY_LEFT    (GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_13))?0:1 //
-#define KEY_UP          (GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_14))?0:1 //
+#define KEY_UP      (GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_14))?0:1 //
 #define KEY_RIGHT   (GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_15))?0:1 //
 
 #define Back_Light(x) x?(GPIO_SetBits(GPIOA, GPIO_Pin_15)):(GPIO_ResetBits(GPIOA, GPIO_Pin_15))
