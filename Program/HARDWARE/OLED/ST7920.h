@@ -9,6 +9,7 @@ extern u8 blank[] ;
 extern unsigned char music_sign[];
 extern u8 blank2[];
 
+void White_Line(void);
 
 #define nop   delay_us(3)
 
@@ -69,6 +70,8 @@ void Dis_menu(void);
 void Disp_Img(unsigned char *img);
 void hzkdis(unsigned char *s);
 extern void put_out(unsigned char x, unsigned char y, unsigned char *str);
+
+
 
 #endif
 

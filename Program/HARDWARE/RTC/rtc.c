@@ -6,7 +6,7 @@
 //2010/6/6
 
 _calendar_obj calendar;//时钟结构体
-
+_calendar_obj temp_time;//时钟结构体
 static void RTC_NVIC_Config(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -52,7 +52,7 @@ u8 RTC_Init(void)
 		RTC_EnterConfigMode();/// 允许配置
 		RTC_SetPrescaler(32767); //设置RTC预分频的值
 		RTC_WaitForLastTask();  //等待最近一次对RTC寄存器的写操作完成
-		RTC_Set(2018, 3, 14, 17, 02, 30); //设置时间
+		RTC_Set(2018, 1, 1, 6, 20, 20); //设置时间
 		RTC_ExitConfigMode(); //退出配置模式
 		BKP_WriteBackupRegister(BKP_DR1, 0X5050);   //向指定的后备寄存器中写入用户程序数据
 	}

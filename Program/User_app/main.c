@@ -4,6 +4,7 @@ SYS_STATE Current_state;
 SYS_STATE KEY_state;
 int main(void)
 {
+
 	u8 read_temp1[6];
 	//  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x20000); //与配置文件相对应  配置程序的起始地址，前面一部分留给了bootload
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
@@ -36,6 +37,8 @@ int main(void)
 	//          AT24CXX_WriteLenByte(30,0, 2);
 	//          AT24CXX_WriteLenByte(40,0, 2);
 
+
+
 	oled_updatescr(0, 64);//屏幕刷新
 
 	while(1)
@@ -47,13 +50,14 @@ int main(void)
 			Back_Light(0);//背光电源关闭输出5V
 		}
 
+		White_Line();
 		//      if(max_waite==10000)
 		//      {   lcdreset();                    //初始化LCD屏
 		//              clrgdram();
 		//              max_waite=0;
 		//      }
 
-		//oled_updatescr(0, 64);       //屏幕刷新
+		//      oled_updatescr(0, 64);       //屏幕刷新
 	}
 }
 

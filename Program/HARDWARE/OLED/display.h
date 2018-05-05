@@ -105,6 +105,8 @@ extern INPUT_DATA input_data;
 extern void Show_Time(void);
 extern void Display_Items(u8 state);
 extern void Display_Menu(u8 state);
+extern void display_current_time(void);
+
 
 extern void AddCurrentInputData(u8* inputdata, u8 length, u8 show_type);
 extern ErrorStatus DeleteCurrentInputData(u8 length, u8 show_type);
@@ -127,46 +129,8 @@ extern void ShowInput(u8 state);
 void show_left_button(unsigned char *msg);
 void show_right_button(unsigned char *msg);
 
+void display_modify_time(void);
 
-//  extern void Show_SET_KEY(u8 state);
-
-//  extern void ShowDeviceType(unsigned char type);
-//  extern u8 ShowProgress(u8 label,u8 state);
-//  extern void ShowRegState(u8 state);
-//  extern void ShowRegHoleSelect(u16 index);
-//  extern void ShowBusVoltage(void);
-//  extern void ShowBusHighCurrent(void);
-//  extern void ShowBusLowCurrent(void);
-//  extern void ShowBatteryVoltage(void);
-//  extern void ShowBusError(u8 state);
-//  extern void ShowRegFinish(void);
-//  extern void ShowSystemStateInfo(u8 state);
-//  extern void ShowNetTestState(u8 state);
-//  extern void ShowTestDetErrorList(u8 up_down, u8 disdel);
-//  extern void ShowDeleteDetInfoState(u8 state);
-//  extern void ShowDelayModifyState(u8 state);
-//  extern void ShowNetListInfo(u16 hole_index, u8 type);
-//  extern void ShowSystemSetFunState(u8 state);
-//  extern void ShowDeviceNameModify(u8 name);
-//  extern void ShowSelectDetTypeMakeSure (u8 n_num);
-//  extern void ShowDkeyTransState(u8 state);
-//  extern void ShowDeviceCurrentDetState(void);
-//  extern void ShowBlastProcessState(u8 state);
-//  extern void ShowConnectState(u8 state);
-//  extern void ShowDetRegTypeError(unsigned char type);
-//  extern void ShowBattaryLow(u16 voltage);
-//  extern void ShowDeviceNetConnectCommState(u8 name, u8 retry);
-//  extern void ShowDeviceNetConnectlist(u8 up_down);
-//  extern void ShowBlastUserPassWordValidate(u8 reply);
-//  extern void ShowHVButtonState(u8 type);
-//  extern void ShowBlasteFireNumber(u8 number);
-//  extern void DebugTest(u8 state);
-
-//  extern void ShowGPSOrGPRSState(u8 state);
-//  extern void ShowGPRSInitResult(u8 state, u8 result1, u8 result2);
-//  extern void ShowSystemInfoSafeMonitorFun(u8 num);
-//  extern ErrorStatus ShowBlasterFireRecorder(u16 index);
-//  extern void ShowBlasteValidityErrorInfo(u8 errnum);
 extern void Dis_menu(void);
 extern void ShowSys_Message(u8 state);
 extern void ShowPad(u8 state);

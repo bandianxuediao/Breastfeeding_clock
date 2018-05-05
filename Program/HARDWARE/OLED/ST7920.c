@@ -673,9 +673,171 @@ int ABS(int num)
 }
 
 
+void White_Line(void)
+{
+	u8 i = 0;
+
+	if((Draw_Line) && (GetDrawLineTimerState() == TIME_OUT))
+	{
+		switch(Current_state)
+		{
+			case MODIFY_YEAR://修改当前年
+			case SELECT_YEAR://修改当前年
+				for(i = 0; i < 31; i++)
+				{
+					lcd_set_dot(16 + i, 25, 1);
+					lcd_set_dot(16 + i, 26, 1);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(56 + i, 25, 0);
+					lcd_set_dot(56 + i, 26, 0);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(80 + i, 38, 0);
+					lcd_set_dot(80 + i, 39, 0);
+				}
+
+				SetDrawLineTimer(500);
+				break;
+
+			case MODIFY_MONTH://修改月
+			case SELECT_MONTH://修改月
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(56 + i, 25, 1);
+					lcd_set_dot(56 + i, 26, 1);
+				}
+
+				for(i = 0; i < 31; i++)
+				{
+					lcd_set_dot(16 + i, 25, 0);
+					lcd_set_dot(16 + i, 26, 0);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(80 + i, 25, 0);
+					lcd_set_dot(80 + i, 26, 0);
+				}
+
+				SetDrawLineTimer(200);
+				break;
+
+			case MODIFY_DATE://修改日
+			case SELECT_DATE://修改日
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(80 + i, 25, 1);
+					lcd_set_dot(80 + i, 26, 1);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(56 + i, 25, 0);
+					lcd_set_dot(56 + i, 26, 0);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(33 + i, 38, 0);
+					lcd_set_dot(33 + i, 39, 0);
+				}
+
+				SetDrawLineTimer(200);
+				break;
+
+			case MODIFY_HOUR://修改小时
+			case SELECT_HOUR://修改小时
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(33 + i, 38, 1);
+					lcd_set_dot(33 + i, 39, 1);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(80 + i, 25, 0);
+					lcd_set_dot(80 + i, 26, 0);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(56 + i, 38, 0);
+					lcd_set_dot(56 + i, 39, 0);
+				}
+
+				SetDrawLineTimer(200);
+				break;
+
+			case MODIFY_MIN://修改分钟
+			case SELECT_MIN://修改分钟
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(56 + i, 38, 1);
+					lcd_set_dot(56 + i, 39, 1);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(33 + i, 38, 0);
+					lcd_set_dot(33 + i, 39, 0);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(80 + i, 38, 0);
+					lcd_set_dot(80 + i, 39, 0);
+				}
+
+				SetDrawLineTimer(200);
+				break;
+
+			case MODIFY_SEC://修改秒
+			case SELECT_SEC://修改秒
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(80 + i, 38, 1);
+					lcd_set_dot(80 + i, 39, 1);
+				}
+
+				for(i = 0; i < 15; i++)
+				{
+					lcd_set_dot(56 + i, 38, 0);
+					lcd_set_dot(56 + i, 39, 0);
+				}
+
+				for(i = 0; i < 31; i++)
+				{
+					lcd_set_dot(16 + i, 25, 0);
+					lcd_set_dot(16 + i, 26, 0);
+				}
+
+				SetDrawLineTimer(200);
+				break;
+
+			default:
+				break;
 
 
 
+		}
+
+
+
+
+
+	}
+
+
+
+
+
+
+}
 
 
 

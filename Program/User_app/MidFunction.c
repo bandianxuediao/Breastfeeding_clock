@@ -12,6 +12,99 @@ Time_Struct Temp_Time;
 u32 TurnPage_Calc = 0; //翻页操作计数
 u32 Diff_timecount = 0;
 u16 Total_List = 0;
+u8 Draw_Line = 0;
+
+
+//1,上，增加 0，下，减小
+void Modify_time(u8 state)
+{
+	switch(Current_state)
+	{
+		case MODIFY_YEAR://修改当前年
+			if(state)
+			{
+				temp_time.w_year += 1;
+			}
+			else
+			{
+				temp_time.w_year -= 1;
+			}
+
+			display_modify_time();
+			break;
+
+		case MODIFY_MONTH://修改月
+			if(state)
+			{
+				temp_time.w_month += 1;
+			}
+			else
+			{
+				temp_time.w_month -= 1;
+			}
+
+			display_modify_time();
+			break;
+
+		case MODIFY_DATE://修改日
+			if(state)
+			{
+				temp_time.w_date += 1;
+			}
+			else
+			{
+				temp_time.w_date -= 1;
+			}
+
+			display_modify_time();
+			break;
+
+		case MODIFY_HOUR://修改小时
+			if(state)
+			{
+				temp_time.hour += 1;
+			}
+			else
+			{
+				temp_time.hour -= 1;
+			}
+
+			display_modify_time();
+			break;
+
+		case MODIFY_MIN://修改分钟
+			if(state)
+			{
+				temp_time.min += 1;
+			}
+			else
+			{
+				temp_time.min -= 1;
+			}
+
+			display_modify_time();
+			break;
+
+		case MODIFY_SEC://修改秒
+
+			if(state)
+			{
+				temp_time.sec += 1;
+			}
+			else
+			{
+				temp_time.sec -= 1;
+			}
+
+			display_modify_time();
+			break;
+
+	}
+
+
+}
+
+
 //==================================================================================================
 //| 函数名称 | Current_index_read
 //|----------|--------------------------------------------------------------------------------------
@@ -27,7 +120,7 @@ u16 Total_List = 0;
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-u16 Current_index_read(u16 base)
+u16 Current_index_read(u32 base)
 {
 	switch(base)
 	{
@@ -68,7 +161,7 @@ u16 Current_index_read(u16 base)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-u16 Current_index_write(u16 base, u16 num)
+u16 Current_index_write(u32 base, u16 num)
 {
 	switch(base)
 	{
@@ -114,7 +207,7 @@ u16 Current_index_write(u16 base, u16 num)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void Renovate_List(u16 base, u8 direction)
+void Renovate_List(u32 base, u8 direction)
 {
 	u8 read_temp[17];
 	u32 timecount = 0;
@@ -126,49 +219,49 @@ void Renovate_List(u16 base, u8 direction)
 	//      TurnPage_Calc++;
 	//      return;
 	//  }
-	if((TurnPage_Calc >= 3) && ((Total_List - TurnPage_Calc) >= 0))
+	if(((Total_List - TurnPage_Calc) >= 0))
 	{
 		clr_disp_mem();         //清除显存数据
 
 		sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, (Diff_timecount / 360) % 10);
 		oled_print(0, LINE0, &display_temp[0]);//字符输出
 
+		for(i = 0; i < 3; i++)
+		{
+
+			AT24CXX_Read(((TurnPage_Calc - i) * 6 + base), read_temp, 6);
+			SecTo_Time(read_temp);
+			sprintf((char*)read_temp, "%d_%02d%02d%02d %02d:%02d", Total_List - (TurnPage_Calc - i), Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
+
+
+			new_front_state = 0; //从半汉字开始输入
+
+			oled_print(0, (i + 1) * 13 - 2, &read_temp[0]); //字符输出
+
+			if((TurnPage_Calc - i) == 0)
+			{
+				break;
+			}
+		}
+
 		switch(base)
 		{
 			case BASE_ADDR_LACTATION:
-				for(i = 0; i < 3; i++)
-				{
-
-					AT24CXX_Read(((TurnPage_Calc - i) * 6 + base), read_temp, 6);
-					SecTo_Time(read_temp);
-					sprintf((char*)read_temp, "%d_%02d%02d%02d %02d:%02d", Total_List + 1 - (TurnPage_Calc - i), Temp_Time.year - 2000, Temp_Time.month, Temp_Time.day, Temp_Time.hour, Temp_Time.min);
-
-
-					new_front_state = 0; //从半汉字开始输入
-
-					oled_print(0, (i + 1) * 13 - 2, &read_temp[0]); //字符输出
-
-				}
-
-
 				show_left_button("哺乳"); //显示左功能
 				break;
 
 			case BASE_ADDR_DRINK:
 
-			//AT24CXX_Read((num * 6 + base), read_temp, 6);
-			//      EepIndex.drink=num;
-			//          break;
+				show_left_button("补水"); //显示左功能
+				break;
 
-			//      case BASE_ADDR_SHIT:
-			//AT24CXX_Read((num * 6 + base), read_temp, 6);
-			//      EepIndex.shit=num;
-			//          break;
+			case BASE_ADDR_SHIT:
+				show_left_button("大便"); //显示左功能
+				break;
 
-			//      case BASE_ADDR_URINATE:
-			//      AT24CXX_Read((num * 6 + base), read_temp, 6);
-			//EepIndex.urinate=num;
-			//          break;
+			case BASE_ADDR_URINATE:
+				show_left_button("小便"); //显示左功能
+				break;
 
 			default:
 				break;
@@ -195,7 +288,7 @@ void Renovate_List(u16 base, u8 direction)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void Storage_One_Data(u16 base)
+void Storage_One_Data(u32 base)
 {
 	u16 num = 0;
 	u32 timecount = 0;
@@ -254,7 +347,7 @@ void Storage_One_Data(u16 base)
 //|----------|--------------------------------------------------------------------------------------
 //| 修改记录 | 修改人：          时间：         修改内容：
 //==================================================================================================
-void TimeDiffer_Calc(u16 base)
+void TimeDiffer_Calc(u32 base)
 {
 	u8 read_temp[10];
 	u8 display_temp[16];
@@ -272,7 +365,7 @@ void TimeDiffer_Calc(u16 base)
 	else
 	{
 		TurnPage_Calc = num - 1;
-		Total_List = num - 1;
+		Total_List = num;
 		AT24CXX_Read((TurnPage_Calc * 6 + base), read_temp, 6);
 
 		Next_timecount += read_temp[0];
@@ -295,13 +388,13 @@ void TimeDiffer_Calc(u16 base)
 			{
 				sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, (Diff_timecount / 360) % 10);
 				//刷新列表
-				Renovate_List(BASE_ADDR_LACTATION, 1);
+				Renovate_List(base, 1);
 			}
 			else
 			{
 				sprintf((char*)display_temp, "共%d条|超时", num);
 				//刷新列表
-				Renovate_List(BASE_ADDR_LACTATION, 1);
+				Renovate_List(base, 1);
 			}
 
 		}

@@ -127,7 +127,22 @@ DELAY_STATE GetLightTimerState(void)
 }
 
 
+void SetDrawLineTimer(u32 DelayTime)
+{
+	DelayData.delay2_cnt = DelayTime;
+}
 
+DELAY_STATE GetDrawLineTimerState(void)
+{
+	if(DelayData.delay2_cnt == 0)
+	{
+		return TIME_OUT;
+	}
+	else
+	{
+		return RUNNING;
+	}
+}
 //==================================================================================================
 //| º¯ÊýÃû³Æ | TimingDelayDecrement
 //|----------|--------------------------------------------------------------------------------------
@@ -155,6 +170,10 @@ void TimingDelayDecrement(void)
 		DelayData.delay1_cnt--;
 	}
 
+	if(DelayData.delay2_cnt != 0)
+	{
+		DelayData.delay2_cnt--;
+	}
 
 }
 

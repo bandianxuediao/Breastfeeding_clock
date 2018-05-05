@@ -51,18 +51,18 @@ extern SYS_STATE KEY_state;
 extern u32 TurnPage_Calc; //·­Ò³²Ù×÷¼ÆÊý
 extern u32 Diff_timecount;
 extern u16 Total_List;
-
-
-void Renovate_List(u16 base, u8 direction);
-extern void Storage_One_Data(u16 base);
+extern u8 Draw_Line;
+void Modify_time(u8 state);
+void Renovate_List(u32 base, u8 direction);
+extern void Storage_One_Data(u32 base);
 extern void PIN_Init(void);
 extern void pad_scan(void);
 //extern void find_card(void);
 //extern u8 compare_array(u8* array1, u8* array2);
-void TimeDiffer_Calc(u16 base);
+void TimeDiffer_Calc(u32 base);
 void List_Display(void);
 
-extern u16 Current_index_read(u16 base);
+extern u16 Current_index_read(u32 base);
 
 extern void  Random_Adc_Init(void);
 extern u16 GET_Random(void);

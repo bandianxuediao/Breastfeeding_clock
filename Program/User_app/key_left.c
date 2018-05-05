@@ -53,7 +53,7 @@ void KeyLeft_Program(void)
 			break;
 
 		case LACTATION_LIST:
-			if(Diff_timecount >= 3600)
+			if((Diff_timecount >= 3600) || ((EepIndex.lactation | Diff_timecount) == 0)) //哺乳间隔时间最少1小时
 			{
 				Storage_One_Data(BASE_ADDR_LACTATION);
 			}
@@ -61,12 +61,86 @@ void KeyLeft_Program(void)
 			break;
 
 		case DRINK_LIST:
+			if((Diff_timecount >= 3600) || ((EepIndex.drink | Diff_timecount) == 0)) //补水间隔时间最少1小时
+			{
+				Storage_One_Data(BASE_ADDR_DRINK);
+			}
+
+			break;
+
 		case SHIT_LIST:
+			if((Diff_timecount >= 3600) || ((EepIndex.shit | Diff_timecount) == 0)) //大便间隔时间最少1小时
+			{
+				Storage_One_Data(BASE_ADDR_SHIT);
+			}
+
+			break;
+
 		case URINATE_LIST:
+			if((Diff_timecount >= 1800) || ((EepIndex.urinate | Diff_timecount) == 0)) //小便间隔时间最少0.5小时
+			{
+				Storage_One_Data(BASE_ADDR_URINATE);
+			}
 
+			break;
 
+			break;
 
+		case MODIFY_YEAR://修改当前年
+		case MODIFY_MONTH://修改月
+		case MODIFY_DATE://修改日
+		case MODIFY_HOUR://修改小时
+		case MODIFY_MIN://修改分钟
+		case MODIFY_SEC://修改秒
+			RTC_WaitForLastTask();  //等待最近一次对RTC寄存器的写操作完成
+			RTC_EnterConfigMode();/// 允许配置
+			RTC_SetPrescaler(32767); //设置RTC预分频的值
+			RTC_WaitForLastTask();  //等待最近一次对RTC寄存器的写操作完成
+			RTC_Set(temp_time.w_year, temp_time.w_month, temp_time.w_date, temp_time.hour, temp_time.min, temp_time.sec); //设置时间
+			RTC_ExitConfigMode(); //退出配置模式
+			BKP_WriteBackupRegister(BKP_DR1, 0X5050);   //向指定的后备寄存器中写入用户程序数据
+			delay_ms(1100);//等待1秒以上，rtc更新时间
 
+		case DISPLAY_MENU_TIME:
+			display_current_time();
+			Draw_Line = 1;
+			Current_state = SELECT_YEAR; //默认选中年
+			break;
+
+		case SELECT_YEAR:
+			Draw_Line = 1;
+			display_modify_time();
+			Current_state = MODIFY_YEAR; //修改年
+			break;
+
+		case SELECT_MONTH:
+			Draw_Line = 1;
+			display_modify_time();
+			Current_state = MODIFY_MONTH; //修改年
+			break;
+
+		case SELECT_DATE:
+			Draw_Line = 1;
+			display_modify_time();
+			Current_state = MODIFY_DATE; //修改年
+			break;
+
+		case SELECT_HOUR:
+			Draw_Line = 1;
+			display_modify_time();
+			Current_state = MODIFY_HOUR; //修改年
+			break;
+
+		case SELECT_MIN:
+			Draw_Line = 1;
+			display_modify_time();
+			Current_state = MODIFY_MIN; //修改年
+			break;
+
+		case SELECT_SEC:
+			Draw_Line = 1;
+			display_modify_time();
+			Current_state = MODIFY_SEC; //修改年
 			break;
 
 		default:

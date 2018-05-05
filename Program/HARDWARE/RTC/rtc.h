@@ -18,6 +18,7 @@ typedef struct
 	vu8  week;
 } _calendar_obj;
 extern _calendar_obj calendar;  //日历结构体
+extern _calendar_obj temp_time;  //修改时间时临时保存数据
 
 extern u8 const mon_table[12];  //月份日期数据表
 void Disp_Time(u8 x, u8 y, u8 size); //在制定位置开始显示时间

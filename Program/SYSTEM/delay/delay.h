@@ -19,7 +19,8 @@ extern void SysTickInit(void);
 extern void SysTickDelay(u32 DelayTime);
 extern void SetLightTimer(u32 DelayTime);
 extern DELAY_STATE GetLightTimerState(void);
-
+extern void SetDrawLineTimer(u32 DelayTime);
+extern DELAY_STATE GetDrawLineTimerState(void);
 
 extern void TimingDelayDecrement(void);
 extern void delay_us(u32 dlynum);

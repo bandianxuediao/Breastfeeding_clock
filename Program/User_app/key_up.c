@@ -33,8 +33,10 @@ void KeyUp_Program(void)
 
 		case LACTATION_LIST:
 
-			if((TurnPage_Calc + 1) < EepIndex.lactation)
+			if(((TurnPage_Calc + 1) < EepIndex.lactation) && TurnPage_Calc > 3)
+			{
 				TurnPage_Calc += 1;
+			}
 
 			Renovate_List(BASE_ADDR_LACTATION, 0);
 
@@ -59,6 +61,46 @@ void KeyUp_Program(void)
 			break;
 
 		case WELCOME_WAIT:
+
+			break;
+
+		case SELECT_YEAR://修改当前年
+			delay_ms(500);
+			Current_state = SELECT_SEC;
+			break;
+
+		case SELECT_MONTH://修改月
+			delay_ms(500);
+			Current_state = SELECT_YEAR;
+			break;
+
+		case SELECT_DATE://修改日
+			delay_ms(500);
+			Current_state = SELECT_MONTH;
+			break;
+
+		case SELECT_HOUR://修改小时
+			delay_ms(500);
+			Current_state = SELECT_DATE;
+			break;
+
+		case SELECT_MIN://修改分钟
+			delay_ms(500);
+			Current_state = SELECT_HOUR;
+			break;
+
+		case SELECT_SEC://修改秒
+			delay_ms(500);
+			Current_state = SELECT_MIN;
+			break;
+
+		case MODIFY_YEAR://修改当前年
+		case MODIFY_MONTH://修改月
+		case MODIFY_DATE://修改日
+		case MODIFY_HOUR://修改小时
+		case MODIFY_MIN://修改分钟
+		case MODIFY_SEC://修改秒
+			Modify_time(1);
 
 			break;
 

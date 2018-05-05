@@ -1350,29 +1350,6 @@ void Display_Menu(u8 state)
 			break;
 		}
 
-		case 2:
-		{
-			oled_print(0, LINE2, "√") ;  //大便
-
-			Current_state = DISPLAY_ITEM_SHIT; //当前状态置为项目显示
-			break;
-		}
-
-		case 3:
-		{
-
-			oled_print(4, LINE1, "√") ;  //补水
-			Current_state = DISPLAY_ITEM_DRINK; //当前状态置为项目显示
-			break;
-		}
-
-		case 4:
-		{
-
-			oled_print(4, LINE2, "√") ;  //小便
-			Current_state = DISPLAY_ITEM_URINATE; //当前状态置为项目显示
-			break;
-		}
 
 		default:
 			break;
@@ -1398,7 +1375,14 @@ void Show_Time(void)
 		case    MODIFY_DRINK_SURE://修改补水量确认状态
 		case    SHIT_LIST://显示大便时间列表状态
 		case    URINATE_LIST://显示小编时间列表状态
-
+		case DISPLAY_MENU_TIME:
+		case DISPLAY_CURRENT_TIME:
+			//      case MODIFY_YEAR://修改当前年
+			//      case MODIFY_MONTH://修改月
+			//      case MODIFY_DATE://修改日
+			//      case MODIFY_HOUR://修改小时
+			//      case MODIFY_MIN://修改分钟
+			//      case MODIFY_SEC://修改秒
 		{
 			//      ShowWelcome();
 			//          sprintf((char*)tim_temp,"%d-%02d-%02d",calendar.w_year,calendar.w_month,calendar.w_date);
@@ -1428,6 +1412,43 @@ void Show_Time(void)
 			//          clr_disp_mem();         //清除显存数据
 			break;
 	}
+}
+
+void display_current_time(void)
+{
+	u8 tim_temp[30];
+	clr_disp_mem();         //清除显存数据
+
+	memcpy(&temp_time, &calendar, sizeof(calendar));
+	oled_print(0, LINE0, "按上下键选择");//字符输出
+	sprintf((char*)tim_temp, "%d-%02d-%02d", temp_time.w_year, temp_time.w_month, temp_time.w_date);
+	new_front_state = 0; //从整汉字处开始输入
+	oled_print(1, LINE1, &tim_temp[0]);//字符输出
+	sprintf((char*)tim_temp, "%02d:%02d:%02d", temp_time.hour, temp_time.min, temp_time.sec);
+	new_front_state = 0; //从半汉字开始输入
+	oled_print(2, LINE2, &tim_temp[0]);//字符输出
+
+	show_right_button("返回");//显示右功能
+	show_left_button("选择"); //显示左功能
+	oled_updatescr(0, 64);     //屏幕刷新
+
+}
+void display_modify_time(void)
+{
+	u8 tim_temp[30];
+	clr_disp_mem();         //清除显存数据
+	oled_print(0, LINE0, "按上下键修改");//字符输出
+	sprintf((char*)tim_temp, "%d-%02d-%02d", temp_time.w_year, temp_time.w_month, temp_time.w_date);
+	new_front_state = 0; //从整汉字处开始输入
+	oled_print(1, LINE1, &tim_temp[0]);//字符输出
+	sprintf((char*)tim_temp, "%02d:%02d:%02d", temp_time.hour, temp_time.min, temp_time.sec);
+	new_front_state = 0; //从半汉字开始输入
+	oled_print(2, LINE2, &tim_temp[0]);//字符输出
+
+	show_right_button("返回");//显示右功能
+	show_left_button("保存"); //显示左功能
+	oled_updatescr(0, 64);     //屏幕刷新
+
 }
 
 

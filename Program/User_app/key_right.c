@@ -29,13 +29,27 @@ void KeyRight_Program(void)
 			Current_state = WELCOME_WAIT;
 			break;
 
+		case MODIFY_YEAR://修改当前年
+		case MODIFY_MONTH://修改月
+		case MODIFY_DATE://修改日
+		case MODIFY_HOUR://修改小时
+		case MODIFY_MIN://修改分钟
+		case MODIFY_SEC://修改秒
+
+
+
+		case        SELECT_YEAR://选中年
+		case    SELECT_MONTH://选中月
+		case    SELECT_DATE://选中日
+		case    SELECT_HOUR://选中小时
+		case    SELECT_MIN://选中分钟
+		case    SELECT_SEC://选中秒
+		case DISPLAY_CURRENT_TIME:
 		case WELCOME_WAIT:
 			Display_Menu(1);
 			Current_state = DISPLAY_MENU_TIME;
 			break;
-
-
-
+			break;
 
 		case LACTATION_LIST:
 			Display_Items(1);   //默认为选中Lactation
