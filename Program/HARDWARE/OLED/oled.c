@@ -815,7 +815,8 @@ void oled_print_buff(unsigned char x, unsigned char y, unsigned char *str, unsig
 	oled_disp_buf[start_page + 1][x] |= udtdata.ucdata[1];
 
 	//如果判断显示不下的时候，返回1，表示输入参数有误
-	if(start_page + 2 < OLED_PAGE)
+	//if(start_page + 2 < OLED_PAGE)
+			if(start_page < OLED_PAGE)
 	{
 		oled_disp_buf[start_page + 2][x] |= udtdata.ucdata[2];
 	}
