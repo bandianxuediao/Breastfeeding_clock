@@ -962,7 +962,7 @@ void oled_updatescr(unsigned char sl, unsigned char n)
 			for(h = temp; h < temp + 8; h++)
 			{
 				write_com(0x36);
-				write_com(0x80 + s);    //往下走1格
+				write_com(0x80 + s); //往下走1格
 				write_com(0x80 + h); //横着往后走16格
 				write_com(0x30);
 				write_data(new_oled_buff[s][h * 2]);

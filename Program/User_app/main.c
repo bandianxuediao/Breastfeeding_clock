@@ -40,6 +40,15 @@ int main(void)
 
 
 	oled_updatescr(0, 64);//屏幕刷新
+//测试一下，一直刷新屏幕，清空缓存是否还会出现乱码现象	
+	while(1)
+	{
+	oled_updatescr(0, 64);     //屏幕刷新
+		delay_ms(500);
+
+}
+	
+	
 
 	while(1)
 	{
