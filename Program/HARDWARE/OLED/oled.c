@@ -924,24 +924,9 @@ void oled_updatachar(void)
 
 void oled_updatescr(unsigned char sl, unsigned char n)
 {
-	//  unsigned char oled_line,j=0,oled_h_dot;
 	unsigned char s, h /*,dot_line*/, temp = 0;
-	//  unsigned long   dot_index=0;
-	//for(dot_line=0;dot_line<=4;dot_line++)
-	//{
-	//  for(oled_h_dot=0;oled_h_dot<=7;oled_h_dot++)
-	//  {
-	//      for(oled_line=dot_line*12;oled_line<=(dot_line*12+11);oled_line++)
-	//      {
-	//          new_oled_buff[oled_line][2*oled_h_dot]=chardot[dot_index];
-	//          new_oled_buff[oled_line][2*oled_h_dot+1]=chardot[++dot_index];
-	//          dot_index++;
-	//      }
-	//  }
-	//}
 
-
-	for(s = 0; s <= 64; s++)
+	for(s = 0; s < 64; s++)
 	{
 		if(s > 31)
 		{
@@ -970,32 +955,6 @@ void oled_updatescr(unsigned char sl, unsigned char n)
 			}
 		}
 	}
-
-
-
-	//26
-	//  unsigned char i,j,aaa,bbb,x=0,y=0,k=0;
-	//for(j=0;j<2;j++)
-	//  {
-	//  for(i = 0; i < 12; i++)
-	//    {
-	//          aaa=x + 0x80 + i;
-	//          bbb=j + 0x80;
-	//          if(x+i>=32)
-	//          {
-	//          if(k>=6){k=0;}
-	//          aaa=0x80+k;k++;
-	//          bbb=j+0x80+8;
-	//          }
-	//        write_com(0x36);
-	//        write_com(aaa);
-	//        write_com(bbb);
-	//        write_com(0x30);
-	//        write_data(hzdot[2 * (i+j*12)]);
-	//        write_data(hzdot[2 * (i+j*12) + 1]);
-	//    }
-	//  }
-
 }
 
 //==================================================================================================
