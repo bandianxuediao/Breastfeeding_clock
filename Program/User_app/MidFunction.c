@@ -1,10 +1,5 @@
 #include "includes.h"
 
-//MEASURE_STR measure_str;
-
-//OPERATE_DATA op_data;
-//LOGGER_INFO logger_info;
-//u8 temp_buffer[1056];//用于全局的中间缓冲区，非专用。
 u8 INPUT_PASS_STATE ; //用于表示处在哪个密码输入状态
 EEP_index EepIndex;
 Time_Struct TimeDiffer;

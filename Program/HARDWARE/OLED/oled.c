@@ -585,7 +585,7 @@ void oled_print(unsigned int x, unsigned int y, unsigned char *str)
 //==================================================================================================
 //| 函数名称 | oled_print16x32
 //|----------|--------------------------------------------------------------------------------------
-//| 函数功能 | 
+//| 函数功能 |
 //|----------|--------------------------------------------------------------------------------------
 //| 调用模块 | oled_print_buff32：把要显示的汉字/字符数据放入缓冲区中的对应位置模块
 //|----------|--------------------------------------------------------------------------------------
@@ -634,7 +634,7 @@ void oled_print16x32(unsigned int x, unsigned int y, unsigned char num)
 //==================================================================================================
 //| 函数名称 | oled_print32x32
 //|----------|--------------------------------------------------------------------------------------
-//| 函数功能 | 
+//| 函数功能 |
 //|----------|--------------------------------------------------------------------------------------
 //| 调用模块 | oled_print_buff32：把要显示的汉字/字符数据放入缓冲区中的对应位置模块
 //|----------|--------------------------------------------------------------------------------------
@@ -816,7 +816,7 @@ void oled_print_buff(unsigned char x, unsigned char y, unsigned char *str, unsig
 
 	//如果判断显示不下的时候，返回1，表示输入参数有误
 	//if(start_page + 2 < OLED_PAGE)
-			if(start_page < OLED_PAGE)
+	if(start_page < OLED_PAGE)
 	{
 		oled_disp_buf[start_page + 2][x] |= udtdata.ucdata[2];
 	}
@@ -921,15 +921,31 @@ void oled_updatachar(void)
 
 	}
 }
-
+//更新显示，就是把已经存到buffer里面的数据全部发送到ST7920的RAM
 void oled_updatescr(unsigned char sl, unsigned char n)
 {
 	unsigned char s, h /*,dot_line*/, temp = 0;
 
 	for(s = 0; s < 64; s++)
 	{
-		if(s > 31)
+		if(s < 32) //下半屏
 		{
+			temp = 0;
+
+			for(h = temp; h < temp + 8; h++)
+			{
+				write_com(0x36);
+				write_com(0x80 + s); //往下走1格
+				write_com(0x80 + h); //横着往后走16格
+				write_com(0x30);
+				write_data(new_oled_buff[s][h * 2]);
+				write_data(new_oled_buff[s][h * 2 + 1]);
+			}
+		}
+		else//上半屏
+		{
+
+
 			temp = 8;
 
 			for(h = temp; h < temp + 8; h++)
@@ -941,18 +957,8 @@ void oled_updatescr(unsigned char sl, unsigned char n)
 				write_data(new_oled_buff[s][(h - temp) * 2]);
 				write_data(new_oled_buff[s][(h - temp) * 2 + 1]);
 			}
-		}
-		else
-		{
-			for(h = temp; h < temp + 8; h++)
-			{
-				write_com(0x36);
-				write_com(0x80 + s); //往下走1格
-				write_com(0x80 + h); //横着往后走16格
-				write_com(0x30);
-				write_data(new_oled_buff[s][h * 2]);
-				write_data(new_oled_buff[s][h * 2 + 1]);
-			}
+
+
 		}
 	}
 }
