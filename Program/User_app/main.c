@@ -4,7 +4,7 @@ SYS_STATE Current_state;
 SYS_STATE KEY_state;
 int main(void)
 {
-
+	u8 temp = 0;
 	u8 read_temp1[6];
 	//  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x20000); //与配置文件相对应  配置程序的起始地址，前面一部分留给了bootload
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
@@ -25,7 +25,7 @@ int main(void)
 	ShowWelcome();
 	delay_ms(600);
 	Back_Light(1);//开机背光电源输出5V
-	SetLightTimer(120000);//设置背光亮起时间2分钟
+	SetLightTimer(60000);//设置背光亮起时间1分钟
 	Current_state = WELCOME_WAIT;
 
 
@@ -41,13 +41,15 @@ int main(void)
 
 	oled_updatescr(0, 64);//屏幕刷新
 
-	//测试一下，一直刷新屏幕，清空缓存是否还会出现乱码现象
-	while(1)
-	{
-		oled_updatescr(0, 64);     //屏幕刷新
-		delay_ms(500);
+	//  //测试一下，一直刷新屏幕，清空缓存是否还会出现乱码现象
+	//  while(1)
+	//  {
+	//
 
-	}
+	//          oled_updatescr(0, 64);     //屏幕刷新
+	//      delay_ms(10);
+
+	//  }
 
 
 
@@ -61,13 +63,14 @@ int main(void)
 		}
 
 		White_Line();
+
 		//      if(max_waite==10000)
 		//      {   lcdreset();                    //初始化LCD屏
 		//              clrgdram();
 		//              max_waite=0;
 		//      }
 
-		//      oled_updatescr(0, 64);       //屏幕刷新
+		oled_updatescr(0, 64);       //屏幕刷新
 	}
 }
 

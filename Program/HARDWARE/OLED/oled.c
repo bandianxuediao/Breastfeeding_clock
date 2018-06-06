@@ -928,11 +928,12 @@ void oled_updatescr(unsigned char sl, unsigned char n)
 
 	for(s = 0; s < 64; s++)
 	{
-		if(s < 32) //下半屏
+		if(s < 32) //上半屏
 		{
-			temp = 0;
 
-			for(h = temp; h < temp + 8; h++)
+
+			for(h = 0; h < 8; h++)
+
 			{
 				write_com(0x36);
 				write_com(0x80 + s); //往下走1格
@@ -942,25 +943,23 @@ void oled_updatescr(unsigned char sl, unsigned char n)
 				write_data(new_oled_buff[s][h * 2 + 1]);
 			}
 		}
-		else//上半屏
+		else//下半屏
 		{
-
-
-			temp = 8;
-
-			for(h = temp; h < temp + 8; h++)
+			for(h = 8; h < 16; h++)
 			{
 				write_com(0x36);
 				write_com(0x80 + s - 32);   //往下走1格
 				write_com(0x80 + h); //横着往后走16格
 				write_com(0x30);
-				write_data(new_oled_buff[s][(h - temp) * 2]);
-				write_data(new_oled_buff[s][(h - temp) * 2 + 1]);
+				write_data(new_oled_buff[s][(h - 8) * 2]);
+				write_data(new_oled_buff[s][(h - 8) * 2 + 1]);
 			}
 
 
 		}
 	}
+
+	//memset(new_oled_buff,0,sizeof(new_oled_buff));
 }
 
 //==================================================================================================

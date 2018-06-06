@@ -208,9 +208,9 @@ void show_status_bar(unsigned char *str1, unsigned char align1, unsigned char *s
 //==================================================================================================
 void ShowWelcome(void)
 {
-	clr_disp_mem();         //清除显存数据
-	lcdreset();                    //初始化LCD屏
-	clrgdram();
+	//  clr_disp_mem();         //清除显存数据
+	//  lcdreset();                    //初始化LCD屏
+	//  clrgdram();
 	oled_print(0, LINE0, "    哺乳记录    ") ;  //字符输出函数
 	oled_print(0, LINE1, "愿李嘉钊小宝宝") ;  //字符输出函数
 	oled_print(0, LINE2, "       健康成长") ;  //字符输出函数
@@ -306,8 +306,8 @@ void Display_Menu(u8 state)
 {
 	clr_disp_mem();         //清除显存数据
 	oled_print(0, LINE0, "      菜单      ") ;  //字符输出函数
-	oled_print(0, LINE1, "  时间 		") ;  //字符输出函数
-	oled_print(0, LINE2, "  ") ;  //字符输出函数
+	oled_print(0, LINE1, "  时间") ;  //字符输出函数
+	oled_print(0, LINE2, "  清空") ;  //字符输出函数
 
 	switch(state)
 	{
@@ -318,6 +318,12 @@ void Display_Menu(u8 state)
 			break;
 		}
 
+		case 2:
+		{
+			oled_print(0, LINE2, "√") ;  //字符输出函数
+			Current_state = DISPLAY_MENU_TIME; //当前状态置为项目显示
+			break;
+		}
 
 		default:
 			break;
@@ -357,9 +363,9 @@ void Show_Time(void)
 			//          new_front_state=0;//从整汉字处开始输入
 			//          oled_print(1, LINE3, &tim_temp[0]);//字符输出
 			sprintf((char*)tim_temp, "%02d:%02d:%02d", calendar.hour, calendar.min, calendar.sec);
-			new_front_state = 0; //从半汉字开始输入
+			new_front_state = 0; //从整汉字开始输入
 			oled_print(2, LINE4, &tim_temp[0]);//字符输出
-			oled_updatescr(0, 64);     //屏幕刷新
+
 			break;
 		}
 
@@ -368,18 +374,19 @@ void Show_Time(void)
 		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
 		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
 		{
-			oled_hline(2, 8, 111, 0);//在OLED显示屏上绘制一条亮/暗的横线
+			//oled_hline(2, 8, 111, 0);//在OLED显示屏上绘制一条亮/暗的横线
 			oled_print(3, LINE4, "↑↓");//在显示屏底部显示状态信息
-			oled_updatescr(0, 64);     //屏幕刷新
 
 
 
+			break;
 		}
 
 		default:
 			//          clr_disp_mem();         //清除显存数据
 			break;
 	}
+
 }
 
 void display_current_time(void)
