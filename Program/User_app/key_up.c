@@ -33,7 +33,7 @@ void KeyUp_Program(void)
 
 		case LACTATION_LIST:
 
-			if(((TurnPage_Calc + 1) < EepIndex.lactation) && TurnPage_Calc > 3)
+			if(((TurnPage_Calc + 1) < EepIndex.lactation) && TurnPage_Calc > 1)
 			{
 				TurnPage_Calc += 1;
 			}

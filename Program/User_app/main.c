@@ -10,10 +10,8 @@ int main(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 
 	SysTickInit();         //设置滴答定时器中断时间为1ms
-	//  delay_init();            //延时函数初始化
 
 	EE_IIC_Init();             //EEPROM的IIC初始化
-
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);        //使用了spi3，禁用JATG，保留SWD功能

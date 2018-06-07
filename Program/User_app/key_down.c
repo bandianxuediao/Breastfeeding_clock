@@ -33,7 +33,7 @@ void KeyDown_Program(void)
 		break;
 
 		case LACTATION_LIST:
-			if((TurnPage_Calc - 1) > 0)
+			if((TurnPage_Calc - 2) > 0)
 			{
 				TurnPage_Calc--;
 				Renovate_List(BASE_ADDR_LACTATION, 1);
@@ -42,7 +42,7 @@ void KeyDown_Program(void)
 			break;
 
 		case DRINK_LIST:
-			if((TurnPage_Calc - 1) > 0)
+			if((TurnPage_Calc - 2) > 0)
 			{
 				TurnPage_Calc--;
 				Renovate_List(BASE_ADDR_DRINK, 1);
