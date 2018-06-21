@@ -178,24 +178,7 @@
           <Name>-O14 -S0 -C0 -N00("ARM Cortex-M3") -D00(1BA00477) -L00(4) -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F10x_128 -FS08000000 -FL010000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>36</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>D:\GitHub\Breastfeeding_clock\Program\User_app\key_down.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -281,10 +264,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>29</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>7</CurrentLine>
+      <TopLine>27</TopLine>
+      <CurrentLine>35</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User_app\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -321,10 +304,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>308</TopLine>
-      <CurrentLine>315</CurrentLine>
+      <TopLine>201</TopLine>
+      <CurrentLine>218</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\OLED\display.c</PathWithFileName>
       <FilenameWithoutPath>display.c</FilenameWithoutPath>
@@ -339,8 +322,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>219</TopLine>
-      <CurrentLine>226</CurrentLine>
+      <TopLine>339</TopLine>
+      <CurrentLine>348</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User_app\MidFunction.c</PathWithFileName>
       <FilenameWithoutPath>MidFunction.c</FilenameWithoutPath>
@@ -353,10 +336,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>5</ColumnNumber>
+      <ColumnNumber>31</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>86</TopLine>
-      <CurrentLine>98</CurrentLine>
+      <TopLine>309</TopLine>
+      <CurrentLine>9</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\RTC\rtc.c</PathWithFileName>
       <FilenameWithoutPath>rtc.c</FilenameWithoutPath>
@@ -369,10 +352,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>13</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>29</TopLine>
-      <CurrentLine>42</CurrentLine>
+      <TopLine>20</TopLine>
+      <CurrentLine>35</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User_app\key_down.c</PathWithFileName>
       <FilenameWithoutPath>key_down.c</FilenameWithoutPath>
@@ -385,10 +368,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>33</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>89</TopLine>
+      <CurrentLine>105</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User_app\key_left.c</PathWithFileName>
       <FilenameWithoutPath>key_left.c</FilenameWithoutPath>
@@ -401,10 +384,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>12</ColumnNumber>
+      <ColumnNumber>27</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>24</TopLine>
-      <CurrentLine>10</CurrentLine>
+      <TopLine>16</TopLine>
+      <CurrentLine>34</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User_app\key_right.c</PathWithFileName>
       <FilenameWithoutPath>key_right.c</FilenameWithoutPath>
@@ -419,8 +402,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>28</TopLine>
-      <CurrentLine>42</CurrentLine>
+      <TopLine>19</TopLine>
+      <CurrentLine>33</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\User_app\key_up.c</PathWithFileName>
       <FilenameWithoutPath>key_up.c</FilenameWithoutPath>
@@ -459,8 +442,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>924</TopLine>
-      <CurrentLine>925</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\OLED\oled.c</PathWithFileName>
       <FilenameWithoutPath>oled.c</FilenameWithoutPath>
@@ -475,8 +458,8 @@
       <Focus>0</Focus>
       <ColumnNumber>3</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>669</TopLine>
-      <CurrentLine>681</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\OLED\ST7920.c</PathWithFileName>
       <FilenameWithoutPath>ST7920.c</FilenameWithoutPath>
@@ -737,10 +720,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>5</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>24</TopLine>
-      <CurrentLine>33</CurrentLine>
+      <TopLine>26</TopLine>
+      <CurrentLine>34</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\SYSTEM\delay\delay.c</PathWithFileName>
       <FilenameWithoutPath>delay.c</FilenameWithoutPath>
@@ -755,8 +738,8 @@
       <Focus>0</Focus>
       <ColumnNumber>21</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>17</TopLine>
-      <CurrentLine>18</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\SYSTEM\usart\usart.c</PathWithFileName>
       <FilenameWithoutPath>usart.c</FilenameWithoutPath>

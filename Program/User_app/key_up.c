@@ -31,6 +31,17 @@ void KeyUp_Program(void)
 		}
 		break;
 
+		case    DISPLAY_MENU_TIME:
+			Display_Menu(2);
+			Current_state = DISPLAY_MENU_CLEAR;
+			break;
+
+		case    DISPLAY_MENU_CLEAR:
+			Display_Menu(1);
+			Current_state = DISPLAY_MENU_TIME;
+			break;
+
+
 		case LACTATION_LIST:
 
 			if(((TurnPage_Calc + 1) < EepIndex.lactation) && TurnPage_Calc > 1)
@@ -43,19 +54,34 @@ void KeyUp_Program(void)
 			break;
 
 		case DRINK_LIST:
-			TurnPage_Calc += 3;
+
+			if(((TurnPage_Calc + 1) < EepIndex.drink) && TurnPage_Calc > 1)
+			{
+				TurnPage_Calc += 1;
+			}
+
 			Renovate_List(BASE_ADDR_DRINK, 0);
 
 			break;
 
 		case SHIT_LIST:
-			TurnPage_Calc += 3;
+
+			if(((TurnPage_Calc + 1) < EepIndex.shit) && TurnPage_Calc > 1)
+			{
+				TurnPage_Calc += 1;
+			}
+
 			Renovate_List(BASE_ADDR_SHIT, 0);
 
 			break;
 
 		case URINATE_LIST:
-			TurnPage_Calc += 3;
+
+			if(((TurnPage_Calc + 1) < EepIndex.urinate) && TurnPage_Calc > 1)
+			{
+				TurnPage_Calc += 1;
+			}
+
 			Renovate_List(BASE_ADDR_URINATE, 0);
 
 			break;

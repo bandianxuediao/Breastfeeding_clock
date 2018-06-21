@@ -25,6 +25,7 @@ void KeyRight_Program(void)
 		case DISPLAY_ITEM_SHIT://显示项目状态--选中大便
 		case DISPLAY_ITEM_URINATE://显示项目状态--选中小便
 		case DISPLAY_MENU_TIME:
+		case DISPLAY_MENU_CLEAR_WAIT:
 			ShowWelcome();
 			Current_state = WELCOME_WAIT;
 			break;
@@ -48,7 +49,6 @@ void KeyRight_Program(void)
 		case WELCOME_WAIT:
 			Display_Menu(1);
 			Current_state = DISPLAY_MENU_TIME;
-			break;
 			break;
 
 		case LACTATION_LIST:

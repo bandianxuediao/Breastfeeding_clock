@@ -17,7 +17,7 @@ u8 Items_state = 1;
 //==================================================================================================
 void KeyLeft_Program(void)
 {
-
+	u8 display_temp[16];
 
 	switch(Current_state)
 	{
@@ -84,7 +84,36 @@ void KeyLeft_Program(void)
 
 			break;
 
+		case DISPLAY_MENU_CLEAR:
+			clr_disp_mem();         //清除显存数据
+			oled_updatescr(0, 64);     //屏幕刷新
+			sprintf((char*)display_temp, "将清空所有数据");
+			oled_print(0, LINE1, &display_temp[0]);//字符输出
+			sprintf((char*)display_temp, "请确认执行操作");
+			oled_print(0, LINE2, &display_temp[0]);//字符输出
+			sprintf((char*)display_temp, "确认        返回");
+			oled_print(0, LINE4, &display_temp[0]);//字符输出
+
+			oled_updatescr(0, 64);     //屏幕刷新
+			Current_state = DISPLAY_MENU_CLEAR_WAIT;
 			break;
+
+		case DISPLAY_MENU_CLEAR_WAIT:
+			AT24CXX_WriteLenByte(10, 0, 2);
+			AT24CXX_WriteLenByte(20, 0, 2);
+			AT24CXX_WriteLenByte(30, 0, 2);
+			AT24CXX_WriteLenByte(40, 0, 2);
+			sprintf((char*)display_temp, "   操作完成");
+			oled_print(0, LINE1, &display_temp[0]);//字符输出
+			sprintf((char*)display_temp, "即将返回主界面");
+			oled_print(0, LINE2, &display_temp[0]);//字符输出
+			oled_updatescr(0, 64);     //屏幕刷新
+			delay_ms(2000);
+			ShowWelcome();
+			Current_state = WELCOME_WAIT;
+
+			break;
+
 
 		case MODIFY_YEAR://修改当前年
 		case MODIFY_MONTH://修改月

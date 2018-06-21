@@ -16,11 +16,11 @@ void Modify_time(u8 state)
 	switch(Current_state)
 	{
 		case MODIFY_YEAR://修改当前年
-			if(state)
+			if(state == 1)
 			{
 				temp_time.w_year += 1;
 			}
-			else
+			else if(state == 0)
 			{
 				temp_time.w_year -= 1;
 			}
@@ -29,11 +29,11 @@ void Modify_time(u8 state)
 			break;
 
 		case MODIFY_MONTH://修改月
-			if(state)
+			if((state == 1) && (temp_time.w_month < 12))
 			{
 				temp_time.w_month += 1;
 			}
-			else
+			else if((state == 0) && (temp_time.w_month > 1))
 			{
 				temp_time.w_month -= 1;
 			}
@@ -42,11 +42,11 @@ void Modify_time(u8 state)
 			break;
 
 		case MODIFY_DATE://修改日
-			if(state)
+			if((state == 1) && (temp_time.w_date < 31))
 			{
 				temp_time.w_date += 1;
 			}
-			else
+			else if((state == 0) && (temp_time.w_date > 1))
 			{
 				temp_time.w_date -= 1;
 			}
@@ -55,11 +55,11 @@ void Modify_time(u8 state)
 			break;
 
 		case MODIFY_HOUR://修改小时
-			if(state)
+			if((state == 1) && (temp_time.hour < 24))
 			{
 				temp_time.hour += 1;
 			}
-			else
+			else if((state == 0) && (temp_time.hour > 1))
 			{
 				temp_time.hour -= 1;
 			}
@@ -68,11 +68,11 @@ void Modify_time(u8 state)
 			break;
 
 		case MODIFY_MIN://修改分钟
-			if(state)
+			if((state == 1) && (temp_time.min < 60))
 			{
 				temp_time.min += 1;
 			}
-			else
+			else if((state == 0) && (temp_time.min > 1))
 			{
 				temp_time.min -= 1;
 			}
@@ -82,11 +82,11 @@ void Modify_time(u8 state)
 
 		case MODIFY_SEC://修改秒
 
-			if(state)
+			if((state == 1) && (temp_time.sec < 60))
 			{
 				temp_time.sec += 1;
 			}
-			else
+			else if((state == 0) && (temp_time.sec > 1))
 			{
 				temp_time.sec -= 1;
 			}
@@ -218,8 +218,8 @@ void Renovate_List(u32 base, u8 direction)
 	{
 		clr_disp_mem();         //清除显存数据
 
-		sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, (Diff_timecount / 360) % 10);
-		oled_print(0, LINE0, &display_temp[0]);//字符输出
+		//      sprintf((char*)display_temp, "共%d条|%d.%d小时", Total_List, Diff_timecount / 3600, (Diff_timecount / 360) % 10);
+		//      oled_print(0, LINE0, &display_temp[0]);//字符输出
 
 		for(i = 0; i < 3; i++)
 		{

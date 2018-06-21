@@ -32,6 +32,16 @@ void KeyDown_Program(void)
 		}
 		break;
 
+		case    DISPLAY_MENU_TIME:
+			Display_Menu(2);
+			Current_state = DISPLAY_MENU_CLEAR;
+			break;
+
+		case    DISPLAY_MENU_CLEAR:
+			Display_Menu(1);
+			Current_state = DISPLAY_MENU_TIME;
+			break;
+
 		case LACTATION_LIST:
 			if((TurnPage_Calc - 2) > 0)
 			{
@@ -51,14 +61,20 @@ void KeyDown_Program(void)
 			break;
 
 		case SHIT_LIST:
-			TurnPage_Calc--;
-			Renovate_List(BASE_ADDR_SHIT, 1);
+			if((TurnPage_Calc - 2) > 0)
+			{
+				TurnPage_Calc--;
+				Renovate_List(BASE_ADDR_SHIT, 1);
+			}
 
 			break;
 
 		case URINATE_LIST:
-			TurnPage_Calc--;
-			Renovate_List(BASE_ADDR_URINATE, 1);
+			if((TurnPage_Calc - 2) > 0)
+			{
+				TurnPage_Calc--;
+				Renovate_List(BASE_ADDR_URINATE, 1);
+			}
 
 			break;
 

@@ -17,6 +17,9 @@ typedef enum
 	DISPLAY_ITEM_URINATE,//显示项目状态--选中小便
 
 	DISPLAY_MENU_TIME,//显示菜单--选中时间
+	DISPLAY_MENU_CLEAR,//显示菜单--选中清空
+	DISPLAY_MENU_CLEAR_WAIT,//等待确认清空
+	DISPLAY_MENU_CLEAR_DONE,//清空完成
 	DISPLAY_CURRENT_TIME,//显示当前时间
 	SELECT_YEAR,//选中年
 	SELECT_MONTH,//选中月

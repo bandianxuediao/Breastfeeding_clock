@@ -208,7 +208,7 @@ void show_status_bar(unsigned char *str1, unsigned char align1, unsigned char *s
 //==================================================================================================
 void ShowWelcome(void)
 {
-	//  clr_disp_mem();         //清除显存数据
+	clr_disp_mem();         //清除显存数据
 	//  lcdreset();                    //初始化LCD屏
 	//  clrgdram();
 	oled_print(0, LINE0, "    哺乳记录    ") ;  //字符输出函数
@@ -321,7 +321,7 @@ void Display_Menu(u8 state)
 		case 2:
 		{
 			oled_print(0, LINE2, "√") ;  //字符输出函数
-			Current_state = DISPLAY_MENU_TIME; //当前状态置为项目显示
+			Current_state = DISPLAY_MENU_CLEAR; //当前状态置为项目显示
 			break;
 		}
 
@@ -349,8 +349,9 @@ void Show_Time(void)
 		case    MODIFY_DRINK_SURE://修改补水量确认状态
 		case    SHIT_LIST://显示大便时间列表状态
 		case    URINATE_LIST://显示小编时间列表状态
-		case DISPLAY_MENU_TIME:
-		case DISPLAY_CURRENT_TIME:
+		case        DISPLAY_MENU_TIME:
+		case        DISPLAY_MENU_CLEAR:
+		case        DISPLAY_CURRENT_TIME:
 			//      case MODIFY_YEAR://修改当前年
 			//      case MODIFY_MONTH://修改月
 			//      case MODIFY_DATE://修改日
